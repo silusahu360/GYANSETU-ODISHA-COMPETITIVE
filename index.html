@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GyanSetu Competitive - Online & Offline MCQ Practice</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        * { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { -webkit-font-smoothing: antialiased; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        @keyframes pop { 0% { transform: scale(0.95); } 60% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-3px); } 40%,80% { transform: translateX(3px); } }
+        @keyframes fadeOut { to { opacity: 0; transform: translate(-50%, 10px); } }
+        .view-enter { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        .toast-enter { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .toast-exit { animation: fadeOut 0.3s ease-out forwards; }
+        .pop-in { animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .shake { animation: shake 0.4s ease-out; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .stat-card:hover { transform: translateY(-2px); }
+        .nav-card { transition: all 0.2s ease; }
+        .nav-card:hover { transform: translateX(3px); }
+        .option-btn { transition: all 0.15s ease; }
+        .progress-bar-fill { transition: width 0.4s ease; }
+        .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+<!-- Header -->
+<header class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-violet-600 text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-2.5 cursor-pointer" onclick="navigate('dashboard', {}, true)">
+            <div class="bg-white/95 text-indigo-700 p-2 rounded-xl font-bold text-lg shadow-lg">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-base leading-tight tracking-tight">ଜ୍ଞାନସେତୁ କମ୍ପେଟିଭ୍</h1>
+                <p class="text-[10px] text-indigo-200 tracking-wide uppercase">Online + Offline MCQ</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span id="connection-status" class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-500 text-white shadow-sm">
+                <i class="fa-solid fa-wifi mr-1"></i> Online
+            </span>
+            <button onclick="openBackupModal()" class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-lg text-sm transition shadow" title="Backup & Restore">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Main -->
+<main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" data-view="dashboard" class="space-y-5">
+        <div class="bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-indigo-200 text-xs font-semibold mb-1 uppercase tracking-wider" id="greeting-time">ନମସ୍କାର</p>
+                <h2 class="text-2xl font-extrabold mb-1.5">ସଙ୍ଗ୍ରାମ! 👋</h2>
+                <p class="text-indigo-100 text-sm max-w-md leading-relaxed">ଆଜି ଆପଣଙ୍କର ପ୍ରସ୍ତୁତିକୁ ଆହୁରି ମଜବୁତ କରନ୍ତୁ। ନୂତନ ପ୍ରଶ୍ନ ପଢ଼ନ୍ତୁ ବା ଭୁଲ୍ ହୋଇଥିବା ପ୍ରଶ୍ନଗୁଡ଼ିକୁ ସଂଶୋଧନ କରନ୍ତୁ।</p>
+            </div>
+            <div class="absolute -right-8 -bottom-8 text-white opacity-10 text-9xl">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="absolute top-4 right-4 bg-white/15 glass rounded-xl px-3 py-1.5 text-xs font-bold">
+                <i class="fa-solid fa-fire text-orange-300 mr-1"></i><span id="streak-display">0</span> day streak
+            </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <i class="fa-solid fa-circle-check text-sm"></i>
+                </div>
+                <div class="text-indigo-600 font-bold text-xl" id="stat-total-solved">0</div>
+                <div class="text-[10px] text-slate-500 font-semibold uppercase tracking-wide mt-0.5">Solved</div>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <i class="fa-solid fa-bullseye text-sm"></i>
+                </div>
+                <div class="text-emerald-600 font-bold text-xl" id="stat-accuracy">0%</div>
+                <div class="text-[10px] text-slate-500 font-semibold uppercase tracking-wide mt-0.5">Accuracy</div>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+                </div>
+                <div class="text-rose-600 font-bold text-xl" id="stat-mistakes">0</div>
+                <div class="text-[10px] text-slate-500 font-semibold uppercase tracking-wide mt-0.5">Mistakes</div>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            <h3 class="font-bold text-slate-700 text-sm uppercase tracking-wider flex items-center">
+                <i class="fa-solid fa-compass text-indigo-600 mr-2"></i> ମୁଖ୍ୟ ବିଭାଗ (Main Sections)
+            </h3>
+
+            <div onclick="navigate('subjects')" class="nav-card bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-lg cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-base">📚 PRACTICE</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">ବିଷୟ ଭିତ୍ତିକ ନୂତନ MCQ ଅଭ୍ୟାସ କରନ୍ତୁ।</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all"></i>
+            </div>
+
+            <div onclick="navigate('mistakes')" class="nav-card bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:border-rose-300 hover:shadow-lg cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-base">🎯 MY MISTAKES</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">ଭୁଲ୍ ପ୍ରଶ୍ନଗୁଡ଼ିକୁ ପୁନର୍ବାର ସଂଶୋଧନ କରନ୍ତୁ।</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-rose-600 group-hover:translate-x-1 transition-all"></i>
+            </div>
+
+            <div onclick="navigate('performance')" class="nav-card bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:border-emerald-300 hover:shadow-lg cursor-pointer flex items-center justify-between group">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-base">📊 MY PERFORMANCE</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">ସ୍କୋର, ସଠିକତା ଏବଂ ପ୍ରଗତି ଦେଖନ୍ତୁ।</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUBJECTS -->
+    <div id="view-subjects" data-view="subjects" class="hidden space-y-4">
+        <button onclick="history.back()" class="text-indigo-600 text-sm font-semibold flex items-center hover:text-indigo-800 transition">
+            <i class="fa-solid fa-arrow-left mr-1.5"></i> Back to Dashboard
+        </button>
+        <div>
+            <h2 class="text-2xl font-extrabold text-slate-800">📚 Select Subject</h2>
+            <p class="text-sm text-slate-500 mt-1">ବିଷୟ ଚୟନ କରି ଅଭ୍ୟାସ ଆରମ୍ଭ କରନ୍ତୁ</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="subject-list-container"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="view-quiz" data-view="quiz" class="hidden space-y-4">
+        <div class="flex justify-between items-center">
+            <button onclick="history.back()" class="text-indigo-600 text-sm font-semibold flex items-center hover:text-indigo-800 transition">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Back
+            </button>
+            <div class="flex items-center space-x-2">
+                <span id="quiz-score-badge" class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-full border border-emerald-200">
+                    <i class="fa-solid fa-check mr-1"></i>0
+                </span>
+                <span id="quiz-progress-badge" class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">1 / 5</span>
+            </div>
+        </div>
+
+        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div id="quiz-progress-fill" class="progress-bar-fill bg-gradient-to-r from-indigo-500 to-violet-500 h-1.5 rounded-full" style="width: 0%"></div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+            <div class="flex items-center justify-between">
+                <span id="quiz-subject-label" class="text-xs font-bold text-indigo-600 uppercase tracking-wider">SUBJECT</span>
+            </div>
+            <h3 id="question-text" class="text-lg font-bold text-slate-800 leading-snug">Question text goes here...</h3>
+            <div class="space-y-2.5" id="options-container"></div>
+            <div id="explanation-box" class="hidden p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 text-sm space-y-1">
+                <div class="font-bold text-indigo-700 text-xs uppercase tracking-wider"><i class="fa-solid fa-circle-info mr-1"></i> Explanation</div>
+                <p id="explanation-text" class="text-slate-700 leading-relaxed"></p>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <button onclick="prevQuestion()" id="btn-prev" class="px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-semibold text-sm disabled:opacity-40 disabled:cursor-not-allowed transition">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Previous
+            </button>
+            <button onclick="nextQuestion()" id="btn-next" class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all">
+                Next <i class="fa-solid fa-arrow-right ml-1.5"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MISTAKES -->
+    <div id="view-mistakes" data-view="mistakes" class="hidden space-y-4">
+        <button onclick="history.back()" class="text-rose-600 text-sm font-semibold flex items-center hover:text-rose-800 transition">
+            <i class="fa-solid fa-arrow-left mr-1.5"></i> Back to Dashboard
+        </button>
+        <div>
+            <h2 class="text-2xl font-extrabold text-slate-800">🎯 My Mistakes Hub</h2>
+            <p class="text-sm text-slate-500 mt-1">ଭୁଲ୍ ପ୍ରଶ୍ନଗୁଡ଼ିକୁ ପୁନର୍ବାର ଅଭ୍ୟାସ କରନ୍ତୁ</p>
+        </div>
+        <div id="mistakes-content"></div>
+    </div>
+
+    <!-- PERFORMANCE -->
+    <div id="view-performance" data-view="performance" class="hidden space-y-4">
+        <button onclick="history.back()" class="text-emerald-600 text-sm font-semibold flex items-center hover:text-emerald-800 transition">
+            <i class="fa-solid fa-arrow-left mr-1.5"></i> Back to Dashboard
+        </button>
+        <div>
+            <h2 class="text-2xl font-extrabold text-slate-800">📊 Performance Report</h2>
+            <p class="text-sm text-slate-500 mt-1">ଆପଣଙ୍କର ସମସ୍ତ ପ୍ରଗତିର ସାରାଂଶ</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-6">
+            <div class="grid grid-cols-2 gap-4 text-center">
+                <div class="p-4 bg-gradient-to-br from-indigo-50 to-violet-50 rounded-xl border border-indigo-100">
+                    <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-indigo-600 text-white flex items-center justify-center">
+                        <i class="fa-solid fa-pen text-xs"></i>
+                    </div>
+                    <div class="text-2xl font-extrabold text-indigo-700" id="perf-total">0</div>
+                    <div class="text-[10px] text-slate-600 font-semibold uppercase tracking-wide mt-0.5">Attempted</div>
+                </div>
+                <div class="p-4 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-100">
+                    <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div class="text-2xl font-extrabold text-emerald-700" id="perf-correct">0</div>
+                    <div class="text-[10px] text-slate-600 font-semibold uppercase tracking-wide mt-0.5">Correct</div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-700 text-sm mb-3 flex items-center">
+                    <i class="fa-solid fa-chart-simple text-indigo-600 mr-2"></i> Subject-wise Accuracy
+                </h4>
+                <div id="subject-performance-bars" class="space-y-3"></div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+    GyanSetu Competitive &bull; Designed for Aspirants
+</footer>
+
+<!-- Backup Modal -->
+<div id="backup-modal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center z-50 p-4 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl pop-in">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-cloud-arrow-down text-indigo-600 mr-2"></i> Backup & Restore</h3>
+            <button onclick="closeBackupModal()" class="text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">ଆପଣଙ୍କର ପ୍ରଗତି ଏବଂ ଭୁଲ୍ ପ୍ରଶ୍ନଗୁଡ଼ିକୁ Backup ନେଇ ରଖନ୍ତୁ କିମ୍ବା Restore କରନ୍ତୁ।</p>
+        <div class="flex space-x-3 pt-1">
+            <button onclick="exportData()" class="flex-1 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-md transition">
+                <i class="fa-solid fa-download mr-1"></i> Export
+            </button>
+            <label class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-sm font-semibold text-center cursor-pointer transition">
+                <i class="fa-solid fa-upload mr-1"></i> Import
+                <input type="file" onchange="importData(event)" class="hidden" accept=".json">
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- Results Modal -->
+<div id="results-modal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center z-50 p-4 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl pop-in text-center">
+        <div id="results-icon" class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl"></div>
+        <h3 id="results-title" class="text-xl font-extrabold text-slate-800"></h3>
+        <p id="results-subtitle" class="text-sm text-slate-500"></p>
+        <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-emerald-50 p-3 rounded-xl">
+                <div id="results-correct" class="text-2xl font-extrabold text-emerald-700">0</div>
+                <div class="text-[10px] text-slate-600 font-semibold uppercase">Correct</div>
+            </div>
+            <div class="bg-rose-50 p-3 rounded-xl">
+                <div id="results-wrong" class="text-2xl font-extrabold text-rose-700">0</div>
+                <div class="text-[10px] text-slate-600 font-semibold uppercase">Wrong</div>
+            </div>
+        </div>
+        <div class="flex space-x-3 pt-2">
+            <button onclick="restartQuiz()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-sm font-semibold transition">
+                <i class="fa-solid fa-rotate-left mr-1"></i> Retry
+            </button>
+            <button onclick="closeResultsAndGoHome()" class="flex-1 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-md transition">
+                <i class="fa-solid fa-house mr-1"></i> Home
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ==================== DATA ====================
+const mcqDatabase = {
+    "HISTORY": [
+        { id: "h1", q: "Who was the founder of the Maurya Empire?", options: ["Ashoka", "Chandragupta Maurya", "Bindusara", "Bimbisara"], correct: 1, exp: "Chandragupta Maurya founded the Maurya Empire in 322 BCE with the help of Chanakya." },
+        { id: "h2", q: "The Battle of Plassey was fought in which year?", options: ["1757", "1764", "1857", "1761"], correct: 0, exp: "The Battle of Plassey was fought on 23 June 1757 between the British East India Company and the Nawab of Bengal." },
+        { id: "h3", q: "Who was the first Governor-General of independent India?", options: ["Lord Mountbatten", "C. Rajagopalachari", "Lord Canning", "Warren Hastings"], correct: 0, exp: "Lord Mountbatten served as the first Governor-General of independent India from 1947 to 1948." },
+        { id: "h4", q: "The Quit India Movement was launched in which year?", options: ["1930", "1942", "1945", "1939"], correct: 1, exp: "Mahatma Gandhi launched the Quit India Movement on 8 August 1942 at the Bombay session of AICC." }
+    ],
+    "POLITICAL SCIENCE": [
+        { id: "p1", q: "Which article of the Indian Constitution deals with the Right to Equality?", options: ["Article 12-15", "Article 14-18", "Article 19-22", "Article 25-28"], correct: 1, exp: "Articles 14 to 18 of the Indian Constitution guarantee the Right to Equality." },
+        { id: "p2", q: "Who is the head of the state government in India?", options: ["Prime Minister", "President", "Governor", "Chief Minister"], correct: 3, exp: "The Chief Minister is the head of the state government, while the Governor is the constitutional head." },
+        { id: "p3", q: "How many fundamental duties are listed in the Indian Constitution?", options: ["10", "11", "12", "9"], correct: 1, exp: "There are 11 fundamental duties listed in Article 51A of the Indian Constitution, added by the 42nd Amendment." }
+    ],
+    "INDIAN GEOGRAPHY": [
+        { id: "g1", q: "Which river is known as the 'Sorrow of Bihar'?", options: ["Mahanadi", "Kosi", "Damodar", "Son"], correct: 1, exp: "The Kosi River is known as the 'Sorrow of Bihar' due to its annual devastating floods." },
+        { id: "g2", q: "Which is the longest river in India?", options: ["Yamuna", "Brahmaputra", "Ganga", "Godavari"], correct: 2, exp: "The Ganga is the longest river in India, flowing approximately 2,525 km." },
+        { id: "g3", q: "Which state has the longest coastline in India?", options: ["Tamil Nadu", "Gujarat", "Andhra Pradesh", "Maharashtra"], correct: 1, exp: "Gujarat has the longest coastline in India, stretching about 1,600 km." }
+    ],
+    "ECONOMICS": [
+        { id: "e1", q: "Who regulates monetary policy in India?", options: ["Ministry of Finance", "SEBI", "Reserve Bank of India (RBI)", "NITI Aayog"], correct: 2, exp: "The Reserve Bank of India (RBI) formulates and regulates India's monetary policy." },
+        { id: "e2", q: "What does GDP stand for?", options: ["Gross Domestic Product", "General Domestic Price", "Gross Demand Product", "General Development Plan"], correct: 0, exp: "GDP stands for Gross Domestic Product, the total monetary value of all finished goods and services produced within a country." },
+        { id: "e3", q: "Which sector contributes the most to India's GDP?", options: ["Agriculture", "Industry", "Services", "Mining"], correct: 2, exp: "The services sector contributes the largest share (over 50%) to India's GDP." }
+    ],
+    "WORLD GEOGRAPHY": [
+        { id: "wg1", q: "Which is the largest desert in the world?", options: ["Sahara Desert", "Antarctic Desert", "Gobi Desert", "Kalahari Desert"], correct: 1, exp: "The Antarctic Desert is the largest desert in the world, classified as a polar desert." },
+        { id: "wg2", q: "Which is the smallest country in the world by area?", options: ["Monaco", "Vatican City", "Nauru", "San Marino"], correct: 1, exp: "Vatican City is the smallest country in the world by both area and population." },
+        { id: "wg3", q: "Which continent has the most countries?", options: ["Asia", "Africa", "Europe", "South America"], correct: 1, exp: "Africa has the most countries of any continent, with 54 recognized sovereign states." }
+    ],
+    "CURRENT AFFAIRS": [
+        { id: "c1", q: "Which organization publishes the Human Development Index (HDI)?", options: ["World Bank", "IMF", "UNDP", "WHO"], correct: 2, exp: "The United Nations Development Programme (UNDP) publishes the annual Human Development Index." },
+        { id: "c2", q: "What is India's rank in the Global Hunger Index 2024 approximately?", options: ["Around 50", "Around 80", "Around 105", "Around 150"], correct: 2, exp: "India ranks around 105th (out of 127) in the Global Hunger Index 2024." },
+        { id: "c3", q: "Which country hosted the 2024 Summer Olympics?", options: ["Japan", "France", "USA", "UK"], correct: 1, exp: "France hosted the 2024 Summer Olympics in Paris." }
+    ]
+};
+
+const subjectMeta = {
+    "HISTORY": { icon: 'fa-landmark', gradient: 'from-amber-500 to-orange-600', bg: 'bg-amber-50', text: 'text-amber-700' },
+    "POLITICAL SCIENCE": { icon: 'fa-scale-balanced', gradient: 'from-blue-500 to-indigo-600', bg: 'bg-blue-50', text: 'text-blue-700' },
+    "INDIAN GEOGRAPHY": { icon: 'fa-mountain-sun', gradient: 'from-emerald-500 to-green-600', bg: 'bg-emerald-50', text: 'text-emerald-700' },
+    "ECONOMICS": { icon: 'fa-coins', gradient: 'from-yellow-500 to-amber-600', bg: 'bg-yellow-50', text: 'text-yellow-700' },
+    "WORLD GEOGRAPHY": { icon: 'fa-earth-asia', gradient: 'from-cyan-500 to-teal-600', bg: 'bg-cyan-50', text: 'text-cyan-700' },
+    "CURRENT AFFAIRS": { icon: 'fa-newspaper', gradient: 'from-purple-500 to-pink-600', bg: 'bg-purple-50', text: 'text-purple-700' }
+};
+
+// ==================== STATE ====================
+let userProgress = JSON.parse(localStorage.getItem('gyansetu_progress')) || {
+    solved: {}, mistakes: {}, lastActive: null, streak: 0
+};
+
+let currentQuizData = null;
+
+// ==================== NAVIGATION (browser back support) ====================
+function navigate(name, data = {}, replace = false) {
+    const state = { name, data };
+    if (replace) history.replaceState(state, '', '#' + name);
+    else history.pushState(state, '', '#' + name);
+    showView(name, data);
+}
+
+function showView(name, data) {
+    // Always close any open modals on navigation
+    ['results-modal', 'backup-modal'].forEach(id => {
+        const m = document.getElementById(id);
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+    });
+
+    document.querySelectorAll('[data-view]').forEach(v => v.classList.add('hidden'));
+    const view = document.querySelector(`[data-view="${name}"]`);
+    if (!view) return;
+    view.classList.remove('hidden', 'view-enter');
+    void view.offsetWidth;
+    view.classList.add('view-enter');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (name === 'dashboard') updateDashboard();
+    else if (name === 'subjects') renderSubjects();
+    else if (name === 'quiz') renderQuiz(data);
+    else if (name === 'mistakes') renderMistakes();
+    else if (name === 'performance') renderPerformance();
+}
+
+window.addEventListener('popstate', (e) => {
+    if (e.state) showView(e.state.name, e.state.data);
+    else showView('dashboard', {});
+});
+
+// ==================== DASHBOARD ====================
+function updateDashboard() {
+    let totalSolved = 0, totalCorrect = 0, totalMistakes = 0;
+    Object.keys(mcqDatabase).forEach(subject => {
+        const solvedObj = userProgress.solved[subject] || {};
+        const solvedIds = Object.keys(solvedObj);
+        totalSolved += solvedIds.length;
+        totalCorrect += solvedIds.filter(id => solvedObj[id] === true).length;
+        totalMistakes += (userProgress.mistakes[subject] || []).length;
+    });
+    const accuracy = totalSolved > 0 ? Math.round((totalCorrect / totalSolved) * 100) : 0;
+    document.getElementById('stat-total-solved').innerText = totalSolved;
+    document.getElementById('stat-accuracy').innerText = accuracy + '%';
+    document.getElementById('stat-mistakes').innerText = totalMistakes;
+    document.getElementById('streak-display').innerText = userProgress.streak || 0;
+
+    const hour = new Date().getHours();
+    let greeting = 'ନମସ୍କାର';
+    if (hour < 12) greeting = 'ଶୁଭ ସକାଳ';
+    else if (hour < 17) greeting = 'ଶୁଭ ଅପରାହ୍ନ';
+    else greeting = 'ଶୁଭ ସନ୍ଧ୍ୟା';
+    document.getElementById('greeting-time').innerText = greeting;
+}
+
+// ==================== SUBJECTS ====================
+function renderSubjects() {
+    const container = document.getElementById('subject-list-container');
+    container.innerHTML = '';
+    Object.keys(mcqDatabase).forEach(subject => {
+        const count = mcqDatabase[subject].length;
+        const solvedCount = Object.keys(userProgress.solved[subject] || {}).length;
+        const meta = subjectMeta[subject] || { icon: 'fa-book', gradient: 'from-indigo-500 to-violet-600' };
+        const pct = Math.round((solvedCount / count) * 100);
+        container.innerHTML += `
+            <div onclick="startQuiz('${subject}')" class="bg-white p-4 rounded-xl border border-slate-100 hover:border-indigo-300 shadow-sm hover:shadow-md cursor-pointer group transition-all hover:-translate-y-1">
+                <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br ${meta.gradient} text-white flex items-center justify-center text-lg shadow-sm flex-shrink-0">
+                        <i class="fa-solid ${meta.icon}"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-slate-800 text-sm truncate">${subject}</h4>
+                        <p class="text-[11px] text-slate-500">${count} questions &bull; ${solvedCount} solved</p>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="progress-bar-fill h-1.5 rounded-full bg-gradient-to-r ${meta.gradient}" style="width: ${pct}%"></div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// ==================== QUIZ ====================
+function startQuiz(subject, filterMistakes = false, replace = false) {
+    let questions = mcqDatabase[subject] || [];
+    if (filterMistakes) {
+        const mistakeIds = userProgress.mistakes[subject] || [];
+        questions = questions.filter(q => mistakeIds.includes(q.id));
+    }
+    if (questions.length === 0) {
+        showToast("No questions found!", 'warning');
+        return;
+    }
+    const quizData = { subject, questions, currentIndex: 0, userAnswers: {}, filterMistakes };
+    navigate('quiz', quizData, replace);
+}
+
+function renderQuiz(data) {
+    if (!data || !data.questions || data.questions.length === 0) {
+        history.replaceState({ name: 'subjects', data: {} }, '', '#subjects');
+        showView('subjects', {});
+        return;
+    }
+    currentQuizData = data;
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const data = currentQuizData;
+    const q = data.questions[data.currentIndex];
+    const total = data.questions.length;
+    const correctCount = Object.keys(data.userAnswers).filter(i => data.userAnswers[i] === data.questions[i].correct).length;
+
+    document.getElementById('quiz-progress-badge').innerText = `${data.currentIndex + 1} / ${total}`;
+    document.getElementById('quiz-score-badge').innerHTML = `<i class="fa-solid fa-check mr-1"></i>${correctCount}`;
+    document.getElementById('quiz-progress-fill').style.width = `${((data.currentIndex + 1) / total) * 100}%`;
+    document.getElementById('quiz-subject-label').innerText = data.subject;
+    document.getElementById('question-text').innerText = q.q;
+
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    const selectedOpt = data.userAnswers[data.currentIndex];
+
+    q.options.forEach((opt, idx) => {
+        const letter = String.fromCharCode(65 + idx);
+        let btnClass = "option-btn w-full text-left p-3.5 rounded-xl border-2 text-sm font-medium transition flex items-center justify-between gap-3 ";
+        if (selectedOpt !== undefined) {
+            if (idx === q.correct) btnClass += "bg-emerald-50 border-emerald-500 text-emerald-800 pop-in";
+            else if (idx === selectedOpt) btnClass += "bg-rose-50 border-rose-500 text-rose-800 shake";
+            else btnClass += "bg-white border-slate-200 text-slate-500 opacity-60";
+        } else {
+            btnClass += "bg-white border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 text-slate-700 cursor-pointer";
+        }
+        const disabled = selectedOpt !== undefined ? 'disabled' : '';
+        optionsContainer.innerHTML += `
+            <button onclick="selectOption(${idx})" class="${btnClass}" ${disabled}>
+                <span class="flex items-center gap-3">
+                    <span class="w-7 h-7 rounded-lg ${selectedOpt !== undefined && idx === q.correct ? 'bg-emerald-500 text-white' : selectedOpt !== undefined && idx === selectedOpt ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-600'} flex items-center justify-center text-xs font-bold flex-shrink-0">${letter}</span>
+                    <span>${opt}</span>
+                </span>
+                ${selectedOpt !== undefined && idx === q.correct ? '<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>' : ''}
+                ${selectedOpt !== undefined && idx === selectedOpt && idx !== q.correct ? '<i class="fa-solid fa-circle-xmark text-rose-600 text-lg"></i>' : ''}
+            </button>
+        `;
+    });
+
+    const expBox = document.getElementById('explanation-box');
+    if (selectedOpt !== undefined) {
+        expBox.classList.remove('hidden');
+        document.getElementById('explanation-text').innerText = q.exp;
+    } else {
+        expBox.classList.add('hidden');
+    }
+
+    document.getElementById('btn-prev').disabled = data.currentIndex === 0;
+    const btnNext = document.getElementById('btn-next');
+    btnNext.innerHTML = (data.currentIndex === total - 1)
+        ? `Finish <i class="fa-solid fa-flag-checkered ml-1.5"></i>`
+        : `Next <i class="fa-solid fa-arrow-right ml-1.5"></i>`;
+    const notAnswered = selectedOpt === undefined;
+    btnNext.disabled = notAnswered;
+    btnNext.classList.toggle('opacity-50', notAnswered);
+    btnNext.classList.toggle('cursor-not-allowed', notAnswered);
+}
+
+function selectOption(idx) {
+    const data = currentQuizData;
+    if (data.userAnswers[data.currentIndex] !== undefined) return;
+    data.userAnswers[data.currentIndex] = idx;
+    const q = data.questions[data.currentIndex];
+    const sub = data.subject;
+
+    if (!userProgress.solved[sub]) userProgress.solved[sub] = {};
+    userProgress.solved[sub][q.id] = (idx === q.correct);
+
+    if (idx !== q.correct) {
+        if (!userProgress.mistakes[sub]) userProgress.mistakes[sub] = [];
+        if (!userProgress.mistakes[sub].includes(q.id)) userProgress.mistakes[sub].push(q.id);
+    } else {
+        if (userProgress.mistakes[sub]) {
+            userProgress.mistakes[sub] = userProgress.mistakes[sub].filter(id => id !== q.id);
+        }
+    }
+    saveProgress();
+    renderQuestion();
+}
+
+function nextQuestion() {
+    const data = currentQuizData;
+    if (data.currentIndex < data.questions.length - 1) {
+        data.currentIndex++;
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        showResults();
+    }
+}
+
+function prevQuestion() {
+    if (currentQuizData.currentIndex > 0) {
+        currentQuizData.currentIndex--;
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function showResults() {
+    const data = currentQuizData;
+    const total = data.questions.length;
+    const answered = Object.keys(data.userAnswers).length;
+    let correct = 0;
+    Object.keys(data.userAnswers).forEach(i => {
+        if (data.userAnswers[i] === data.questions[i].correct) correct++;
+    });
+    const wrong = answered - correct;
+    const pct = Math.round((correct / total) * 100);
+
+    const iconEl = document.getElementById('results-icon');
+    const titleEl = document.getElementById('results-title');
+    const subtitleEl = document.getElementById('results-subtitle');
+
+    if (pct >= 80) {
+        iconEl.className = 'w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl bg-emerald-100 text-emerald-600';
+        iconEl.innerHTML = '<i class="fa-solid fa-trophy"></i>';
+        titleEl.innerText = 'Excellent! 🎉';
+        subtitleEl.innerText = `You scored ${pct}% — outstanding performance!`;
+    } else if (pct >= 50) {
+        iconEl.className = 'w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl bg-indigo-100 text-indigo-600';
+        iconEl.innerHTML = '<i class="fa-solid fa-thumbs-up"></i>';
+        titleEl.innerText = 'Good Job! 👍';
+        subtitleEl.innerText = `You scored ${pct}% — keep practicing to improve!`;
+    } else {
+        iconEl.className = 'w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl bg-rose-100 text-rose-600';
+        iconEl.innerHTML = '<i class="fa-solid fa-book-open"></i>';
+        titleEl.innerText = 'Keep Going! 💪';
+        subtitleEl.innerText = `You scored ${pct}% — review the mistakes and try again.`;
+    }
+    document.getElementById('results-correct').innerText = correct;
+    document.getElementById('results-wrong').innerText = wrong;
+
+    const modal = document.getElementById('results-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function restartQuiz() {
+    closeResultsModal();
+    const data = currentQuizData;
+    startQuiz(data.subject, data.filterMistakes, true);
+}
+
+function closeResultsModal() {
+    const m = document.getElementById('results-modal');
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+}
+
+function closeResultsAndGoHome() {
+    closeResultsModal();
+    navigate('dashboard', {}, true);
+}
+
+// ==================== MISTAKES ====================
+function renderMistakes() {
+    const container = document.getElementById('mistakes-content');
+    container.innerHTML = '';
+    let totalMistakes = 0;
+    Object.keys(mcqDatabase).forEach(subject => {
+        const mistakes = userProgress.mistakes[subject] || [];
+        if (mistakes.length === 0) return;
+        totalMistakes += mistakes.length;
+        const meta = subjectMeta[subject] || { icon: 'fa-book', gradient: 'from-rose-500 to-pink-600' };
+        container.innerHTML += `
+            <div class="bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center mb-3 shadow-sm">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br ${meta.gradient} text-white flex items-center justify-center text-sm shadow-sm">
+                        <i class="fa-solid ${meta.icon}"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm">${subject}</h4>
+                        <p class="text-xs text-rose-600 font-semibold">${mistakes.length} wrong ${mistakes.length === 1 ? 'question' : 'questions'} saved</p>
+                    </div>
+                </div>
+                <button onclick="startQuiz('${subject}', true)" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-sm transition">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Retry
+                </button>
+            </div>
+        `;
+    });
+    if (totalMistakes === 0) {
+        container.innerHTML = `
+            <div class="text-center py-12 bg-white rounded-2xl border border-slate-100">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center text-3xl">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <h3 class="font-bold text-slate-700">All Clear! 🎉</h3>
+                <p class="text-sm text-slate-500 mt-1">No mistakes saved. Keep up the great work!</p>
+            </div>
+        `;
+    }
+}
+
+// ==================== PERFORMANCE ====================
+function renderPerformance() {
+    let totalSolved = 0, totalCorrect = 0;
+    const barsContainer = document.getElementById('subject-performance-bars');
+    barsContainer.innerHTML = '';
+    Object.keys(mcqDatabase).forEach(subject => {
+        const solvedObj = userProgress.solved[subject] || {};
+        const solvedIds = Object.keys(solvedObj);
+        if (solvedIds.length === 0) return;
+        const correctCount = solvedIds.filter(id => solvedObj[id] === true).length;
+        const totalQ = solvedIds.length;
+        totalSolved += totalQ;
+        totalCorrect += correctCount;
+        const accuracy = Math.round((correctCount / totalQ) * 100);
+        const barColor = accuracy >= 70 ? 'from-emerald-500 to-green-500' : accuracy >= 40 ? 'from-amber-500 to-orange-500' : 'from-rose-500 to-pink-500';
+        barsContainer.innerHTML += `
+            <div>
+                <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1.5">
+                    <span>${subject}</span>
+                    <span class="text-slate-500">${correctCount}/${totalQ} &bull; <span class="${accuracy >= 70 ? 'text-emerald-600' : accuracy >= 40 ? 'text-amber-600' : 'text-rose-600'}">${accuracy}%</span></span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div class="progress-bar-fill bg-gradient-to-r ${barColor} h-2 rounded-full" style="width: ${accuracy}%"></div>
+                </div>
+            </div>
+        `;
+    });
+    if (totalSolved === 0) {
+        barsContainer.innerHTML = `<div class="text-center py-6 text-sm text-slate-400">No questions attempted yet. Start practicing!</div>`;
+    }
+    document.getElementById('perf-total').innerText = totalSolved;
+    document.getElementById('perf-correct').innerText = totalCorrect;
+}
+
+// ==================== UTILITIES ====================
+function saveProgress() {
+    localStorage.setItem('gyansetu_progress', JSON.stringify(userProgress));
+}
+
+function showToast(message, type = 'success') {
+    const colors = { success: 'bg-emerald-600', error: 'bg-rose-600', info: 'bg-indigo-600', warning: 'bg-amber-600' };
+    const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info', warning: 'fa-triangle-exclamation' };
+    const toast = document.createElement('div');
+    toast.className = `toast-enter fixed bottom-6 left-1/2 -translate-x-1/2 ${colors[type]} text-white px-5 py-3 rounded-xl shadow-lg text-sm font-semibold flex items-center gap-2 z-[100]`;
+    toast.innerHTML = `<i class="fa-solid ${icons[type]}"></i> ${message}`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.remove('toast-enter');
+        toast.classList.add('toast-exit');
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
+}
+
+// ==================== BACKUP ====================
+function openBackupModal() {
+    const m = document.getElementById('backup-modal');
+    m.classList.remove('hidden');
+    m.classList.add('flex');
+}
+function closeBackupModal() {
+    const m = document.getElementById('backup-modal');
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+}
+function exportData() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(userProgress));
+    const a = document.createElement('a');
+    a.setAttribute("href", dataStr);
+    a.setAttribute("download", `gyansetu_backup_${new Date().toISOString().slice(0,10)}.json`);
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('Data exported successfully!', 'success');
+    closeBackupModal();
+}
+function importData(event) {
+    const fileReader = new FileReader();
+    if (event.target.files[0]) {
+        fileReader.readAsText(event.target.files[0], "UTF-8");
+        fileReader.onload = function(e) {
+            try {
+                userProgress = JSON.parse(e.target.result);
+                saveProgress();
+                updateDashboard();
+                showToast('Data imported successfully!', 'success');
+                closeBackupModal();
+            } catch (err) {
+                showToast('Invalid backup file!', 'error');
+            }
+        }
+    }
+}
+
+// ==================== ONLINE/OFFLINE ====================
+function setupOnlineOfflineListener() {
+    const statusBadge = document.getElementById('connection-status');
+    function updateStatus() {
+        if (navigator.onLine) {
+            statusBadge.className = "hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-500 text-white shadow-sm";
+            statusBadge.innerHTML = '<i class="fa-solid fa-wifi mr-1"></i> Online';
+        } else {
+            statusBadge.className = "hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-amber-500 text-white shadow-sm";
+            statusBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Offline';
+        }
+    }
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+}
+
+// ==================== STREAK ====================
+function updateStreak() {
+    const today = new Date().toDateString();
+    if (userProgress.lastActive === today) return;
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (userProgress.lastActive === yesterday) userProgress.streak = (userProgress.streak || 0) + 1;
+    else userProgress.streak = 1;
+    userProgress.lastActive = today;
+    saveProgress();
+}
+
+// ==================== KEYBOARD ====================
+document.addEventListener('keydown', (e) => {
+    const quizView = document.getElementById('view-quiz');
+    if (quizView.classList.contains('hidden') || !currentQuizData) return;
+
+    if (e.key >= '1' && e.key <= '4') {
+        const idx = parseInt(e.key) - 1;
+        const q = currentQuizData.questions[currentQuizData.currentIndex];
+        if (idx < q.options.length && currentQuizData.userAnswers[currentQuizData.currentIndex] === undefined) {
+            selectOption(idx);
+        }
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (currentQuizData.userAnswers[currentQuizData.currentIndex] !== undefined) nextQuestion();
+    } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+    } else if (e.key === 'Escape') {
+        if (!document.getElementById('results-modal').classList.contains('hidden')) closeResultsModal();
+        else if (!document.getElementById('backup-modal').classList.contains('hidden')) closeBackupModal();
+        else history.back();
+    }
+});
+
+// ==================== INIT ====================
+window.addEventListener('load', () => {
+    history.replaceState({ name: 'dashboard', data: {} }, '', '#dashboard');
+    updateStreak();
+    showView('dashboard', {});
+    setupOnlineOfflineListener();
+});
+
+window.addEventListener('beforeunload', () => {
+    saveProgress();
+});
+</script>
+</body>
+</html>
