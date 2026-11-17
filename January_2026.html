@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>January 2026 Current Affairs - 100+ Master MCQ Practice Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-md py-6 px-4">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold">January 2026 Current Affairs</h1>
+                <p class="text-indigo-200 text-sm mt-1">100+ Ultimate Masterclass MCQ Practice Quiz with Detailed Explanations</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div id="score-badge" class="bg-indigo-800 px-3 py-1.5 rounded-full text-sm font-medium">
+                    Score: <span id="current-score">0</span>
+                </div>
+                <div id="progress-badge" class="bg-indigo-700 px-3 py-1.5 rounded-full text-sm font-medium">
+                    Question <span id="current-q-num">1</span> of <span id="total-q-num">105</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 my-auto">
+        <div id="quiz-card" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 transition-all">
+            <!-- Question Category/Tag -->
+            <div id="question-category" class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full mb-4">
+                Category
+            </div>
+
+            <!-- Question Header -->
+            <div id="question-text" class="text-lg sm:text-xl font-semibold text-slate-900 mb-6 leading-relaxed">
+                Loading question...
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="space-y-3 mb-6">
+                <!-- Dynamically injected options -->
+            </div>
+
+            <!-- Explanation Box -->
+            <div id="explanation-box" class="hidden bg-slate-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-6 text-sm sm:text-base text-slate-700">
+                <span class="font-bold text-indigo-900 block mb-1">Explanation & Fact Check:</span>
+                <p id="explanation-text"></p>
+            </div>
+
+            <!-- Action Footer -->
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Previous
+                </button>
+                <div class="flex gap-2">
+                    <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition shadow-sm hidden">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completion Card -->
+        <div id="completion-card" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                🏆
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Quiz Completed Successfully!</h2>
+            <p class="text-slate-600 mb-6">You have mastered all 105 current affairs questions and facts from the January 2026 digest.</p>
+            <div class="text-3xl font-bold text-indigo-600 mb-6">
+                Final Score: <span id="final-score">0</span> / <span id="final-total">105</span>
+            </div>
+            <button onclick="restartQuiz()" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition shadow-sm">
+                Retake Quiz
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-400">
+        Based on January 2026 Monthly Current Affairs (Indologus)
+    </footer>
+
+    <!-- Quiz Logic Script -->
+    <script>
+        const quizData = [
+            {
+                category: "Indices & Rankings",
+                question: "What is India's rank in the Responsible Nations Index 2026?",
+                options: ["10th", "16th (Score: 0.5515 out of 154 countries)", "66th", "90th"],
+                correct: 1,
+                explanation: "India ranked 16th out of 154 countries with a score of 0.5515 in the Responsible Nations Index 2026, released by the World Intellectual Foundation (WIF), New Delhi. Top 3: Singapore, Switzerland, Denmark. USA ranked 66th, China 68th, Pakistan 90th."
+            },
+            {
+                category: "Sports - Tennis",
+                question: "Who won the Men's Singles title at the Australian Open 2026?",
+                options: ["Novak Djokovic", "Carlos Alcaraz (Spain)", "Javokhir Sindarov", "Magnus Carlsen"],
+                correct: 1,
+                explanation: "Carlos Alcaraz (Spain) won the Men's Singles title at the Australian Open 2026 by defeating Novak Djokovic (Serbia). In Women's Singles, Elena Rybakina (Kazakhstan) defeated Aryna Sabalenka (Belarus)."
+            },
+            {
+                category: "Republic Day 2026",
+                question: "Who were the Chief Guests at India's 77th Republic Day Parade 2026?",
+                options: [
+                    "Emmanuel Macron",
+                    "António Costa (President of European Council) & Ursula von der Leyen (President of European Commission)",
+                    "Joe Biden & Kamala Harris",
+                    "Sheikh Mohamed bin Zayed"
+                ],
+                correct: 1,
+                explanation: "The 77th Republic Day had two Chief Guests: António Costa (President of the European Council) and Ursula von der Leyen (President of the European Commission). The theme was '150 Years of Vande Mataram'."
+            },
+            {
+                category: "Republic Day Awards",
+                question: "Which state won the Best State Tableau Award at the 77th Republic Day Parade 2026?",
+                options: ["Kerala", "Jammu and Kashmir", "Maharashtra (Theme: Ganeshotsav: A Symbol of Aatmanirbharta)", "Gujarat"],
+                correct: 2,
+                explanation: "Maharashtra won 1st prize for its tableau 'Ganeshotsav: A Symbol of Aatmanirbharta', followed by J&K (Handicrafts and Folk Dances) and Kerala (Water Metro & 100% Digital Literacy)."
+            },
+            {
+                category: "Republic Day Awards",
+                question: "Who won the Best Marching Contingent award among the three services at the Republic Day Parade 2026?",
+                options: ["Indian Army", "Indian Navy", "Indian Air Force", "Delhi Police"],
+                correct: 1,
+                explanation: "The Indian Navy won the Best Marching Contingent award. Ministry of Culture won for 'Vande Mataram - The Soul Cry of a Nation' in Ministries/Departments, and Delhi Police won among CAPF."
+            },
+            {
+                category: "Gallantry Awards",
+                question: "How many peacetime Gallantry Awards were approved by President Droupadi Murmu for Armed Forces personnel in January 2026?",
+                options: ["50", "70", "100", "131"],
+                correct: 1,
+                explanation: "President Droupadi Murmu approved 70 peacetime gallantry awards: 1 Ashok Chakra (Group Captain Shubhanshu Shukla), 3 Kirti Chakra, 13 Shaurya Chakra, 1 Bar to Sena Medal, 44 Sena Medals, 6 Nao Sena Medals, and 2 Vayu Sena Medals."
+            },
+            {
+                category: "Prestigious Prizes",
+                question: "Who has been awarded the Indira Gandhi Prize for Peace, Disarmament and Development 2025?",
+                options: ["Graça Machel (Mozambican Human rights activist)", "María Corina Machado", "Dr. Toby Kiers", "Chandrakant Lahariya"],
+                correct: 0,
+                explanation: "Mozambican human rights activist Graça Machel won the Indira Gandhi Prize for Peace, Disarmament and Development 2025, which carries a cash prize of ₹1 crore."
+            },
+            {
+                category: "Sports - Cricket",
+                question: "Which team won the 2025-26 Vijay Hazare Trophy (33rd Edition)?",
+                options: ["Saurashtra", "Vidarbha (defeating Saurashtra)", "Mumbai", "Karnataka"],
+                correct: 1,
+                explanation: "Vidarbha won the 2025-26 Vijay Hazare Trophy by defeating Saurashtra in the final. Aman Mokhade (Vidarbha) was named Player of the Series."
+            },
+            {
+                category: "Economic Indices",
+                question: "Which state topped the 4th Export Preparedness Index 2024 released by NITI Aayog?",
+                options: ["Gujarat", "Tamil Nadu", "Maharashtra", "Karnataka"],
+                correct: 2,
+                explanation: "Maharashtra topped the large states category in NITI Aayog's 4th Export Preparedness Index 2024, followed by Tamil Nadu and Gujarat. Among small/NE states and UTs, Uttarakhand ranked 1st."
+            },
+            {
+                category: "Appointments",
+                question: "Who has been appointed as the New Vigilance Commissioner of India in January 2026?",
+                options: ["Praveen Vashista", "Praveen Kumar Srivastava", "A. S. Rajeev", "Rakesh Aggarwal"],
+                correct: 0,
+                explanation: "Praveen Vashista was appointed as Vigilance Commissioner, joining Central Vigilance Commissioner Praveen Kumar Srivastava and A.S. Rajeev. CVC is a statutory body set up in 1964 on the K. Santhanam Committee's recommendation."
+            },
+            {
+                category: "Defence Appointments",
+                question: "Who has been appointed as the new Director General of the Border Security Force (BSF)?",
+                options: ["Praveen Kumar", "Sanjay Singhal", "Paramesh Sivamani", "Shatrujeet Kapur"],
+                correct: 0,
+                explanation: "Praveen Kumar was appointed as Director General of BSF (founded 1965, HQ New Delhi, under MHA)."
+            },
+            {
+                category: "Environment & Geography",
+                question: "The Kalai-II Hydropower Project (1,200 MW) has been recommended for environmental clearance. On which river is it planned?",
+                options: ["Brahmaputra River", "Lohit River (Anjaw District, Arunachal Pradesh)", "Kamala River", "Bembla River"],
+                correct: 1,
+                explanation: "The 1,200 MW Kalai-II Hydropower Project is planned on the Lohit River (a Brahmaputra tributary) in Anjaw District, Arunachal Pradesh. The area is a critical habitat for the critically endangered white-bellied heron bird."
+            },
+            {
+                category: "International News",
+                question: "Lake Natron, recently seen in the news, is located in which country?",
+                options: ["Kenya", "Tanzania", "New Zealand", "Guinea"],
+                correct: 1,
+                explanation: "Lake Natron is located in Tanzania."
+            },
+            {
+                category: "Sports - Volleyball",
+                question: "Which team won the Men's Title at the 72nd National Volleyball Championship held in Varanasi, Uttar Pradesh?",
+                options: ["Uttar Pradesh", "Railways (Men's Champion; Kerala won Women's)", "Services", "Tamil Nadu"],
+                correct: 1,
+                explanation: "Railways won the Men's title at the 72nd National Volleyball Championship in Varanasi, UP. Kerala won the women's title. Each volleyball team has 6 players."
+            },
+            {
+                category: "International Summits",
+                question: "Where was the 56th World Economic Forum (WEF) Annual Meeting held in January 2026?",
+                options: ["Geneva, Switzerland", "Davos, Switzerland", "Cologny, Switzerland", "Dubai, UAE"],
+                correct: 1,
+                explanation: "The 56th WEF Annual Meeting was held in Davos, Switzerland under the theme 'A Spirit of Dialogue' and sub-theme 'Year of Networking and Data Centricity'. WEF was founded in 1971 by Klaus Schwab with HQ in Cologny, Switzerland."
+            },
+            {
+                category: "State Innovations",
+                question: "Which state became the first Indian state to adopt an official 'State Microbe'?",
+                options: ["Maharashtra", "Kerala (adopting Bacillus subtilis)", "Gujarat", "Assam"],
+                correct: 1,
+                explanation: "Kerala became the first Indian state to adopt an official 'State Microbe', choosing Bacillus subtilis—a non-pathogenic, beneficial bacterium found in the human gut and environment, widely used in agriculture, fermentation, and biodegradation."
+            },
+            {
+                category: "Space & Technology",
+                question: "Where has India's first private satellite manufacturing facility (Palmnaro Electro-Optical Payload Facility) been established?",
+                options: ["Bengaluru, Karnataka", "Hyderabad, Telangana", "Sanand, Gujarat (by Azista Space Systems)", "Chennai, Tamil Nadu"],
+                correct: 2,
+                explanation: "India's first private satellite manufacturing facility was established by Azista Space Systems at Khoraj Industrial Estate, Sanand, Gujarat."
+            },
+            {
+                category: "Green Energy",
+                question: "Where is the World's Largest and India's 1st Green Ammonia Project (1.5 MTPA) being developed by AM Green?",
+                options: ["Kakinada, Andhra Pradesh", "Jamnagar, Gujarat", "Kochi, Kerala", "Tuticorin, Tamil Nadu"],
+                correct: 0,
+                explanation: "The world's largest green ammonia project is being developed in Kakinada, Andhra Pradesh by AM Green with a $10 billion investment."
+            },
+            {
+                category: "Padma Awards 2026",
+                question: "How many total Padma Awards were announced for 2026?",
+                options: ["100", "131 (5 Padma Vibhushan, 13 Padma Bhushan, 113 Padma Shri)", "150", "118"],
+                correct: 1,
+                explanation: "A total of 131 Padma Awards were announced for 2026: 5 Padma Vibhushan, 13 Padma Bhushan, and 113 Padma Shri (including 19 women, 6 foreigners/NRI/PIO/OCI, and 16 posthumous awardees)."
+            },
+            {
+                category: "Padma Vibhushan 2026",
+                question: "Which legendary actor was posthumously awarded the Padma Vibhushan in 2026?",
+                options: ["Satish Shah", "Dharmendra Singh Deol (Posthumous)", "R. Madhavan", "Prosenjit Chatterjee"],
+                correct: 1,
+                explanation: "Dharmendra Singh Deol was posthumously awarded the Padma Vibhushan 2026 alongside K.T. Thomas, N. Rajam, P. Narayanan, and V.S. Achuthanandhan."
+            },
+            {
+                category: "Civil Aviation",
+                question: "Which state won the 'Best State for Promotion of Aviation and Ecosystem' award at Wings India 2026?",
+                options: ["Maharashtra", "Uttarakhand", "Gujarat", "Kerala"],
+                correct: 1,
+                explanation: "Uttarakhand won the 'Best State for Promotion of Aviation and Ecosystem' award at Wings India 2026 held at Begumpet Airport, Hyderabad."
+            },
+            {
+                category: "Environment & Sanctuaries",
+                question: "Aralam Wildlife Sanctuary has been renamed as Aralam Butterfly Sanctuary. In which district and state is it located?",
+                options: ["Kannur district, Kerala", "Wayanad district, Kerala", "Anjaw district, Arunachal Pradesh", "Udaipur district, Rajasthan"],
+                correct: 0,
+                explanation: "Aralam Wildlife Sanctuary, located in the Kannur district of Kerala in the Western Ghats, has been renamed as Aralam Butterfly Sanctuary."
+            },
+            {
+                category: "Future Transport",
+                question: "India's first hydrogen-powered train will be launched in which state on the Jind-Sonipat route?",
+                options: ["Punjab", "Haryana", "Gujarat", "Maharashtra"],
+                correct: 1,
+                explanation: "India's first hydrogen-powered train utilizing hydrogen fuel-cell technology (with water vapour as byproduct) will run in Haryana on the Jind-Sonipat route."
+            },
+            {
+                category: "Space & Start-ups",
+                question: "Which Hyderabad start-up developed the 14 kg MOI-1 mini satellite for ISRO's PSLV-C62 mission?",
+                options: ["Azista Space Systems", "TakeMe2Space (along with EON Space Labs)", "SmartGreen Aquaculture", "Palmnaro Tech"],
+                correct: 1,
+                explanation: "Hyderabad start-up TakeMe2Space, along with EON Space Labs, developed the 14 kg MOI-1 mini satellite launched in ISRO's PSLV-C62 mission."
+            },
+            {
+                category: "Pay Commissions",
+                question: "Which state became the first in India to constitute the 8th State Pay Commission, chaired by Subhas Das?",
+                options: ["Assam", "Gujarat", "Maharashtra", "Kerala"],
+                correct: 0,
+                explanation: "Assam became the first state in India to constitute the 8th State Pay Commission (chaired by Subhas Das) to review employee pay and pensions. (The 8th Central Pay Commission chairman is Ranjana Prakash Desai)."
+            },
+            {
+                category: "Judiciary",
+                question: "Who was appointed as the Chief Justice of Patna High Court?",
+                options: ["Sangam Kumar Sahoo", "Justice Soumen Sen", "Justice Revati P. Mohite Dere", "Justice A Muhamed Mustaque"],
+                correct: 0,
+                explanation: "Sangam Kumar Sahoo was appointed Chief Justice of Patna High Court. High Courts are established under Articles 214 to 231 (Part VI); Article 214 mandates a High Court for each state (total 25 HCs)."
+            },
+            {
+                category: "Important Days & Themes",
+                question: "What was the theme of World Hindi Day, celebrated annually on January 10?",
+                options: ["Ignite the Self, Impact the World", "Hindi: From Traditional Knowledge to Artificial Intelligence", "My India, My Vote", "Take Control of Your Data"],
+                correct: 1,
+                explanation: "World Hindi Day is celebrated on January 10 (first used in UNGA on Jan 10, 1949; first celebrated on Jan 10, 2006). The 2026 theme was 'Hindi: From Traditional Knowledge to Artificial Intelligence'."
+            },
+            {
+                category: "Important Days & Themes",
+                question: "National Youth Day is celebrated on January 12 on the birth anniversary of Swami Vivekananda. What was the theme for 2026?",
+                options: ["My India, My Vote", "Ignite the Self, Impact the World", "The power of youth in co-creating education", "Rural and Community Centric Tourism"],
+                correct: 1,
+                explanation: "National Youth Day is observed on January 12 on Swami Vivekananda's birth anniversary. The 2026 theme was 'Ignite the Self, Impact the World'."
+            },
+            {
+                category: "National Voters' Day",
+                question: "National Voters' Day is celebrated on January 25, marking the establishment of the Election Commission in 1950. What was the theme for 2026?",
+                options: ["My India, My Vote", "Electrifying Growth. Empowering Sustainability", "Take Control of Your Data", "Leprosy is curable, the real challenge is stigma"],
+                correct: 0,
+                explanation: "National Voters' Day is celebrated on January 25 (Election Commission established Jan 25, 1950 under Article 324). The 2026 theme was 'My India, My Vote' with the tagline 'Citizen at the Heart of Indian Democracy'."
+            },
+            {
+                category: "State Initiatives",
+                question: "Which state declared 2026 as the 'Year of Agriculture' under the vision 'Prosperous Farmers - Prosperous State'?",
+                options: ["Madhya Pradesh", "Gujarat", "Assam", "Tamil Nadu"],
+                correct: 0,
+                explanation: "Madhya Pradesh declared 2026 as the 'Year of Agriculture' under the 'Prosperous Farmers - Prosperous State' vision, announced by Governor Mangu Bhai Patel."
+            },
+            {
+                category: "Indian Railways Innovations",
+                question: "What is the name of Indian Railways' first humanoid robot for passenger assistance, deployed at Visakhapatnam Railway Station?",
+                options: ["PARAM ARJUN", "ASC ARJUN (developed by RPF)", "RAIL BOT", "GYAN SETU"],
+                correct: 1,
+                explanation: "ASC ARJUN is Indian Railways' first humanoid robot for passenger assistance, deployed at Visakhapatnam Railway Station, Andhra Pradesh, and developed by the Railway Protection Force (RPF)."
+            },
+            {
+                category: "International Exercises",
+                question: "In which country did the 17th edition of the trilateral exercise 'Dosti 17' (2026) involving India, Sri Lanka, and Maldives take place?",
+                options: ["Colombo, Sri Lanka", "Male, Maldives", "Kochi, India", "Port Blair, Andaman"],
+                correct: 1,
+                explanation: "The 17th edition of trilateral exercise Dosti 17 (2026) between India, Sri Lanka, and Maldives took place in Male, Maldives."
+            },
+            {
+                category: "Chess Grandmasters",
+                question: "Who became India's 92nd Chess Grandmaster in January 2026?",
+                options: ["Raahul VS", "Aaryan Varshney (from Delhi)", "Javokhir Sindarov", "Magnus Carlsen"],
+                correct: 1,
+                explanation: "Aaryan Varshney (from Delhi) became India's 92nd Chess Grandmaster, while Raahul VS is the 91st GM."
+            },
+            {
+                category: "Geopolitics & Military Operations",
+                question: "What was the name of the U.S. military operation that captured Venezuelan President Nicolás Maduro in January 2026?",
+                options: ["Operation Absolute Resolve", "Operation Justice Mission", "Operation Epic Fury", "Operation Freedom Shield"],
+                correct: 0,
+                explanation: "U.S. military Operation Absolute Resolve detained Venezuelan President Nicolás Maduro over drug trafficking charges and oil geopolitics (Venezuela holds the world's largest crude oil reserves of 303 billion barrels). Delcy Rodríguez took over as Acting President."
+            },
+            {
+                category: "UN Awards",
+                question: "Which Indian Army officer won the UN Secretary-General's Award 2025 for her project 'Equal Partners, Lasting Peace'?",
+                options: ["Major Swathi Shantha Kumar (from Bengaluru)", "Chandana Sinha", "Subhanshu Shukla", "Revati P. Mohite Dere"],
+                correct: 0,
+                explanation: "Major Swathi Shantha Kumar from Bengaluru won the UN Secretary-General's Award 2025 for her project 'Equal Partners, Lasting Peace'."
+            },
+            {
+                category: "Technology & DRDO",
+                question: "What is the name of the hand-operated sea water desalination system developed by DRDO for soldiers in remote areas?",
+                options: ["PARAM", "SWaDeS (Sea Water Desalination System)", "MOI-1", "Bhairav"],
+                correct: 1,
+                explanation: "DRDO developed SWaDeS (Sea Water Desalination System), a hand-operated system that converts sea water into drinking water for soldiers deployed in remote areas."
+            },
+            {
+                category: "Weather & Technology",
+                question: "Which city will be the first to get India's 3D-printed Automatic Weather Stations, developed by the Indian Institute of Tropical Meteorology (Pune) under Mission Mausam?",
+                options: ["Mumbai", "Bengaluru", "Delhi", "Chennai"],
+                correct: 2,
+                explanation: "Delhi will be the first city to get India's 3D-printed Automatic Weather Stations, developed by the Indian Institute of Tropical Meteorology (Pune) under Mission Mausam."
+            },
+            {
+                category: "International Currency",
+                question: "Which country adopted the Euro as its official currency and became the 21st member of the Eurozone?",
+                options: ["Romania", "Serbia", "Bulgaria", "Albania"],
+                correct: 2,
+                explanation: "Bulgaria officially adopted the Euro as its currency, becoming the 21st member of the Eurozone."
+            },
+            {
+                category: "Obituaries",
+                question: "Ajit Pawar, who passed away in January 2026 in a plane crash in Baramati, was the former Deputy Chief Minister of which state?",
+                options: ["Bihar", "Maharashtra", "Gujarat", "Karnataka"],
+                correct: 1,
+                explanation: "Ajit Anantrao Pawar was the former Deputy Chief Minister of Maharashtra and NCP leader. He tragically passed away in an aircraft accident in Baramati, Maharashtra."
+            },
+            {
+                category: "Political Appointments",
+                question: "Who became Maharashtra's first woman Deputy Chief Minister following Ajit Pawar's demise?",
+                options: ["Sunetra Pawar", "Delcy Rodríguez", "Annpurna Devi", "Revati P. Mohite Dere"],
+                correct: 0,
+                explanation: "Sunetra Pawar (wife of the late Ajit Pawar) became Maharashtra's first woman Deputy Chief Minister."
+            },
+            {
+                category: "Urban Sanitation",
+                question: "Which city has become Uttar Pradesh's first Zero Fresh Waste Dump City under the Swachh Bharat Mission-Urban?",
+                options: ["Varanasi", "Lucknow", "Noida", "Ayodhya"],
+                correct: 1,
+                explanation: "Lucknow became UP's first city to scientifically process 100% municipal solid waste under the Swachh Bharat Mission-Urban."
+            },
+            {
+                category: "State Schemes",
+                question: "The 'Mukhyatri Gramotthan Yojana' has been launched by which state?",
+                options: ["Gujarat (launched by CM Bhupendra Patel)", "Assam", "Madhya Pradesh", "Tamil Nadu"],
+                correct: 0,
+                explanation: "The Mukhyamantri Gramotthan Yojana was launched by Gujarat Chief Minister Bhupendra Patel to transform rural infrastructure."
+            },
+            {
+                category: "State Schemes",
+                question: "The 'Mukhya Mantrir Eti Koli Duti Paat Scheme' providing financial assistance of ₹5000 to tea garden workers was launched by which state?",
+                options: ["Assam", "Kerala", "West Bengal", "Tripura"],
+                correct: 0,
+                explanation: "Assam launched the Mukhya Mantrir Eti Koli Duti Paat Scheme to provide financial assistance of ₹5,000 to tea garden workers."
+            },
+            {
+                category: "Banking & Finance",
+                question: "RBI approved the reappointment of Kaizad Bharucha as Whole-Time Director of which major bank?",
+                options: ["ICICI Bank", "HDFC Bank (HQ: Mumbai)", "Kotak Mahindra Bank", "Axis Bank"],
+                correct: 1,
+                explanation: "RBI approved the reappointment of Kaizad Bharucha as Whole-Time Director of HDFC Bank, which has its headquarters in Mumbai."
+            },
+            {
+                category: "Higher Education",
+                question: "India's First AI-Enabled State University Pilot Project has been launched at Chaudhary Charan Singh University (CCSU), Meerut in partnership with which tech giant?",
+                options: ["Microsoft", "Google Cloud", "Amazon Web Services", "IBM"],
+                correct: 1,
+                explanation: "India's first AI-enabled State University pilot project was launched at Chaudhary Charan Singh University (CCSU), Meerut in partnership with Google Cloud."
+            },
+            {
+                category: "Social Security",
+                question: "Until which year has the Atal Pension Yojana been recently extended by the Union Cabinet?",
+                options: ["2028-29", "2030-31", "2032-33", "2035-36"],
+                correct: 1,
+                explanation: "The Cabinet extended the Atal Pension Yojana till 2030-31. Launched in 2015 by PM Modi in Kolkata, it is administered by the Ministry of Finance for citizens aged 18-40 to provide ₹1K to ₹5K monthly pension after age 60."
+            },
+            {
+                category: "State Schemes",
+                question: "The 'Namo Laxmi Scheme' has been launched in which state to promote girls' education and empowerment with an outlay of ₹1,250 crore?",
+                options: ["Gujarat", "Maharashtra", "Madhya Pradesh", "Rajasthan"],
+                correct: 0,
+                explanation: "Gujarat launched the Namo Laxmi Scheme with an outlay of ₹1,250 crore to promote girls' education and empowerment."
+            },
+            {
+                category: "Global Rankings",
+                question: "According to the Numbeo Global Safety Index, which city has been ranked the world's safest city for the 10th consecutive year?",
+                options: ["Singapore", "Zurich", "Abu Dhabi (UAE Capital)", "Davos"],
+                correct: 2,
+                explanation: "Abu Dhabi (capital of UAE) has been ranked the world's safest city for the 10th consecutive year according to the Numbeo Global Safety Index."
+            },
+            {
+                category: "Research Awards",
+                question: "Who became the first Indian to win the Wiley Research Heroes Prize 2025?",
+                options: ["Chandrakant Lahariya (former WHO staff member)", "Dr. Toby Kiers", "Yarlagadda Lakshmi Prasad", "Surendra Kumar Pachauri"],
+                correct: 0,
+                explanation: "Chandrakant Lahariya, a former staff member of the World Health Organisation, became the first Indian to win the Wiley Research Heroes Prize 2025."
+            },
+            {
+                category: "Artificial Intelligence Summit",
+                question: "Where will the India AI Impact Summit 2026 (the 1st in the Global South) be hosted?",
+                options: ["Mumbai", "New Delhi (February 16-20)", "Bengaluru", "Hyderabad"],
+                correct: 1,
+                explanation: "The India AI Impact Summit 2026 will be hosted in New Delhi from February 16-20, featuring the '7 Chakras of the India-AI Impact Summit'."
+            },
+            {
+                category: "Police Honours",
+                question: "Which State Police has been awarded the President's Police Colour (Nishaan) Award 2026?",
+                options: ["Uttarakhand Police", "Sikkim Police", "Delhi Police", "Kerala Police"],
+                correct: 1,
+                explanation: "Sikkim Police has been awarded the President's Police Colour Award 2026, which is the highest ceremonial honor granted to police forces."
+            },
+            {
+                category: "WPL Cricket",
+                question: "Who became the first player to score a century in Women's Premier League (WPL) history while playing for Mumbai Indians?",
+                options: ["Harmanpreet Kaur Bhullar", "Nat Sciver-Brunt (England all-rounder)", "Smriti Mandhana", "Savita Punia"],
+                correct: 1,
+                explanation: "England all-rounder Nat Sciver-Brunt, playing for Mumbai Indians, became the first player to score a century in Women's Premier League history."
+            },
+            {
+                category: "Environment & Sanctuaries",
+                question: "Kumbhalgarh Wildlife Sanctuary, recently declared an Eco-Sensitive Zone (ESZ) under the Environment (Protection) Act, 1986, is located in which state?",
+                options: ["Madhya Pradesh", "Rajasthan (Aravalli Range)", "Gujarat", "Maharashtra"],
+                correct: 1,
+                explanation: "Kumbhalgarh Wildlife Sanctuary, located in the Aravalli Range of Rajasthan, was declared an Eco-Sensitive Zone by the MoEFCC."
+            },
+            {
+                category: "Animal Welfare",
+                question: "Punjab's first dog sanctuary has been established in which city?",
+                options: ["Amritsar", "Ludhiana", "Chandigarh", "Jalandhar"],
+                correct: 1,
+                explanation: "Punjab's first dog sanctuary has been established in Ludhiana."
+            },
+            {
+                category: "Marine Discoveries",
+                question: "A rare 300-year-old giant black coral was discovered in the deep sea near which country?",
+                options: ["Australia", "New Zealand", "New Zealand", "Fiji"],
+                correct: 1,
+                explanation: "A 300-year-old giant black coral was discovered in the deep sea near New Zealand."
+            },
+            {
+                category: "Book Festivals",
+                question: "India's First NAMO Book Fest 2026 was held in New Delhi and inaugurated by Union Minister Dr. Jitendra Singh, where books like 'Gen V Bano' and 'Mahatma' were launched.",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. India's First NAMO Book Fest 2026 was held in New Delhi, inaugurated by Dr. Jitendra Singh, where books 'Gen V Bano' and 'Mahatma' were launched."
+            },
+            {
+                category: "Political Appointments",
+                question: "Who was appointed as the 16th and youngest National President of the Bharatiya Janata Party (BJP) in January 2026, replacing J.P. Nadda?",
+                options: ["Nitin Nabin (from Bihar)", "Bhupendra Patel", "Ajit Pawar", "Giriraj Singh"],
+                correct: 0,
+                explanation: "Nitin Nabin (from Bihar) was appointed as the 16th National and youngest President of the Bharatiya Janata Party (BJP), replacing J.P. Nadda."
+            },
+            {
+                category: "LNG Agreements",
+                question: "Which country has become India's second-largest Liquefied Natural Gas (LNG) supplier after Qatar following a new long-term agreement?",
+                options: ["USA", "UAE", "Russia", "Australia"],
+                correct: 1,
+                explanation: "The UAE became India's second-largest LNG supplier after Qatar following a long-term supply agreement signed during UAE President Sheikh Mohamed bin Zayed Al Nahyan's visit to India."
+            },
+            {
+                category: "Marine Projects",
+                question: "India's First Open-Sea Marine Fish Farming Project has been launched in which area by the National Institute of Ocean Technology (NIOT)?",
+                options: ["North Bay, Andaman Sea", "Kochi, Kerala", "Visakhapatnam, Andhra Pradesh", "Tuticorin, Tamil Nadu"],
+                correct: 0,
+                explanation: "India's First Open-Sea Marine Fish Farming Project was launched at North Bay, Andaman Sea by Union Minister Dr. Jitendra Singh and implemented by NIOT to boost the Blue Economy."
+            },
+            {
+                category: "International Cooperation",
+                question: "A Joint Declaration of Intent on Telecommunications Cooperation was recently signed between India and which country?",
+                options: ["Germany", "USA", "France", "Japan"],
+                correct: 0,
+                explanation: "A Joint Declaration of Intent on Telecommunications Cooperation was signed between India and Germany."
+            },
+            {
+                category: "Environmental Prizes",
+                question: "Who won the 2026 Tyler Prize for Environmental Achievement (often called the 'Nobel Prize for the environment')?",
+                options: ["Dr. Toby Kiers (American environmental scientist)", "Dr. M.S. Swaminathan", "Graça Machel", "Chandrakant Lahariya"],
+                correct: 0,
+                explanation: "American environmental scientist and biologist Dr. Toby Kiers won the 2026 Tyler Prize for Environmental Achievement."
+            },
+            {
+                category: "Energy Summits",
+                question: "Which city will host the Bharat Electricity Summit 2026 at Yashobhoomi under the theme 'Electrifying Growth. Empowering Sustainability. Connecting Globally'?",
+                options: ["Mumbai", "New Delhi", "Bengaluru", "Hyderabad"],
+                correct: 1,
+                explanation: "New Delhi will host the Bharat Electricity Summit 2026 at Yashobhoomi from March 19-22, 2026."
+            },
+            {
+                category: "Sports Ambassadors",
+                question: "Who has been appointed as Goodwill Ambassador for the Pune Grand Tour 2026, India's first-ever international multi-stage professional cycling race?",
+                options: ["Mahendra Singh Dhoni", "Rohit Sharma", "Virat Kohli", "Neeraj Chopra"],
+                correct: 0,
+                explanation: "Mahendra Singh Dhoni has been appointed as Goodwill Ambassador for the Pune Grand Tour 2026, India's first-ever international multi-stage professional cycling race in Maharashtra."
+            },
+            {
+                category: "Global Risks Report",
+                question: "The Global Risks Report 2026 is published by which organisation?",
+                options: ["World Economic Forum (WEF)", "United Nations", "World Bank", "IMF"],
+                correct: 0,
+                explanation: "The Global Risks Report 2026 is published by the World Economic Forum (WEF). It highlighted geoeconomic confrontation and state-based armed conflicts in the short term, and extreme weather and biodiversity loss in the long term."
+            },
+            {
+                category: "Railway Honours",
+                question: "Who received Indian Railways' highest honour, the 'Ati Vishisht Rail Sewa Puraskar', for her exceptional work in preventing child trafficking?",
+                options: ["Chandana Sinha (RPF officer)", "Major Swathi Shantha Kumar", "Annpurna Devi", "Revati P. Mohite Dere"],
+                correct: 0,
+                explanation: "RPF officer Chandana Sinha received Indian Railways' highest honour, the 'Ati Vishisht Rail Sewa Puraskar', for exceptional work in preventing child trafficking."
+            },
+            {
+                category: "Festivals",
+                question: "Spituk Gustor Festival, famous for its Cham masked dances performed by Buddhist monks, is celebrated in which State or Union Territory?",
+                options: ["Sikkim", "Ladakh", "Arunachal Pradesh", "Himachal Pradesh"],
+                correct: 1,
+                explanation: "Spituk Gustor Festival is a famous Buddhist religious festival celebrated in Ladakh."
+            },
+            {
+                category: "Vande Bharat",
+                question: "India's First Sleeper Vande Bharat Train connects which two cities?",
+                options: ["Delhi - Varanasi", "Kolkata - Guwahati", "Mumbai - Ahmedabad", "Bengaluru - Chennai"],
+                correct: 1,
+                explanation: "India's first sleeper Vande Bharat train connects Kolkata and Guwahati."
+            },
+            {
+                category: "Geography",
+                question: "Recently scientists identified the Finke River as the world's oldest flowing river (aged 300 to 400 million years). In which country is it located?",
+                options: ["India", "Australia", "USA", "Brazil"],
+                correct: 1,
+                explanation: "Australia's Finke River has been identified as the world's oldest flowing river, with an age of 300 to 400 million years."
+            },
+            {
+                category: "Investigation Agency",
+                question: "Who has been appointed as Director General of the National Investigation Agency (NIA)?",
+                options: ["Rakesh Aggarwal", "Sanjay Singhal", "Paramesh Sivamani", "Shatrujeet Kapur"],
+                correct: 0,
+                explanation: "Rakesh Aggarwal was appointed as Director General of the National Investigation Agency (NIA), a counter-terrorism law enforcement agency founded in 2009 under the Ministry of Home Affairs."
+            },
+            {
+                category: "Health Schemes",
+                question: "Which Ministry launched the 'Paripoorna Mediclaim Ayush Bima' health insurance scheme?",
+                options: ["Ministry of Health and Family Welfare", "Ministry of Finance", "Ministry of Ayush", "Ministry of Home Affairs"],
+                correct: 1,
+                explanation: "The Ministry of Finance launched the 'Paripoorna Mediclaim Ayush Bima' health insurance scheme."
+            },
+            {
+                category: "Mobile Health Units",
+                question: "The 'Asha Van' Mobile Unit for Cancer Detection and Awareness was launched by the Chief Minister of which state?",
+                options: ["Gujarat (Bhupendra Patel)", "Assam", "Madhya Pradesh", "Uttar Pradesh"],
+                correct: 0,
+                explanation: "Gujarat Chief Minister Bhupendra Patel launched the 'Asha Van' Mobile Unit for Cancer Detection and Awareness for CGHS beneficiaries."
+            },
+            {
+                category: "Banking Innovations",
+                question: "Which bank launched India's first Solar-Powered ATM Van?",
+                options: ["Tripura Gramin Bank", "State Bank of India", "HDFC Bank", "ICICI Bank"],
+                correct: 0,
+                explanation: "Tripura Gramin Bank launched India's first Solar-Powered ATM Van."
+            },
+            {
+                category: "Commonwealth Conferences",
+                question: "Which city hosted the 28th Conference of Speakers and Presiding Officers of the Commonwealth (CSPOC-2026), chaired by Lok Sabha Speaker Om Birla?",
+                options: ["London", "New Delhi", "Sydney", "Ottawa"],
+                correct: 1,
+                explanation: "New Delhi hosted the 28th CSPOC-2026, chaired by Lok Sabha Speaker Om Birla. CSPOC was established in 1969."
+            },
+            {
+                category: "Cricket Records",
+                question: "Who became the second-highest run-scorer in international cricket history across all formats, surpassing Kumar Sangakkara?",
+                options: ["Rohit Sharma", "Virat Kohli", "Joe Root", "Steve Smith"],
+                correct: 1,
+                explanation: "Virat Kohli surpassed Kumar Sangakkara to become the second-highest run-scorer in international cricket history across all formats, behind Sachin Tendulkar."
+            },
+            {
+                category: "Military Exercises",
+                question: "The joint military-civil fusion exercise 'Sanjha Shakti' was conducted at which military station by the Southern Command?",
+                options: ["Khadki Military Station, Pune", "Udhampur Military Station", "Jaipur Military Station", "Danapur Cantonment"],
+                correct: 0,
+                explanation: "The joint military-civil fusion exercise 'Sanjha Shakti' was conducted at the Diggi Range, Khadki Military Station, Pune by the Southern Command."
+            },
+            {
+                category: "Supercomputing",
+                question: "Where was the 'PARAM SHAKTI' Supercomputing Facility launched?",
+                options: ["IIT Patna", "IIT Guwahati", "IIT Madras", "IISc Bengaluru"],
+                correct: 2,
+                explanation: "PARAM SHAKTI was installed at IIT Kharagpur and IIT Madras (as noted in facility revisions). PARAM Rudra is at IIT Patna, PARAM Kamrupa at IIT Guwahati, PARAM Pravega at IISc Bengaluru, PARAM Ganga at IIT Roorkee, and PARAM Porul at NIT Tiruchirappalli."
+            },
+            {
+                category: "Women & Child Portals",
+                question: "Who launched the 'PANKHUDI' portal to improve services for women and children?",
+                options: ["Annpurna Devi (Union WCD Minister)", "Droupadi Murmu", "Sunetra Pawar", "Graca Machel"],
+                correct: 0,
+                explanation: "Union Women and Child Development Minister Annpurna Devi launched the PANKHUDI portal to improve services for women and children."
+            },
+            {
+                category: "Deeptech Policy",
+                question: "Which state launched India's first Deeptech Startup Policy, aiming to support 100 deep tech start-ups?",
+                options: ["Karnataka", "Tamil Nadu (announced by CM M.K. Stalin)", "Telangana", "Maharashtra"],
+                correct: 1,
+                explanation: "Tamil Nadu Chief Minister M.K. Stalin announced India's first Deeptech Startup Policy to support 100 deep tech start-ups."
+            },
+            {
+                category: "Bio-Happy Districts",
+                question: "Keyi Panyor District, which became India's first Bio-Happy District (where biodiversity is protected), is located in which state?",
+                options: ["Kerala", "Arunachal Pradesh", "Sikkim", "Meghalaya"],
+                correct: 1,
+                explanation: "Keyi Panyor District in Arunachal Pradesh became India's first Bio-Happy District. ('Bio-Happiness' was a term coined by agricultural scientist Dr. M.S. Swaminathan)."
+            },
+            {
+                category: "Criminal Justice Rankings",
+                question: "Which police force ranked first in the ICJS 2.0 (Inter-Operable Criminal Justice System) National Rankings released by NCRB?",
+                options: ["Uttarakhand Police", "Haryana Police", "Assam Police", "Delhi Police"],
+                correct: 0,
+                explanation: "Uttarakhand Police ranked first in the ICJS 2.0 National Rankings released by NCRB under MHA, followed by Haryana and Assam."
+            },
+            {
+                category: "AERB Appointments",
+                question: "Who has been appointed Chairman of the Atomic Energy Regulatory Board (AERB) in 2026?",
+                options: ["A. K. Balasubrahmanian", "Praveen Vashista", "Rakesh Aggarwal", "Sanjay Singhal"],
+                correct: 0,
+                explanation: "A.K. Balasubrahmanian was appointed Chairman of the AERB (formed Nov 15, 1983, HQ Mumbai, given statutory status under the SHANTI Bill, 2025)."
+            },
+            {
+                category: "Textiles Conferences",
+                question: "Which state hosted the National Textiles Ministers' Conference 2026 in Guwahati under the theme 'India's Textiles: Weaving Growth, Heritage & Innovation'?",
+                options: ["Assam (Union Textiles Minister: Giriraj Singh)", "Gujarat", "Tamil Nadu", "Maharashtra"],
+                correct: 0,
+                explanation: "Assam hosted the National Textiles Ministers' Conference 2026 in Guwahati, inaugurated by Union Textiles Minister Giriraj Singh."
+            },
+            {
+                category: "Paperless Courts",
+                question: "India's First Fully Paperless District Court has been inaugurated in Kalpetta, Wayanad district of which state by CJI Surya Kant?",
+                options: ["Kerala", "Tamil Nadu", "Karnataka", "Telangana"],
+                correct: 0,
+                explanation: "India's First Fully Paperless District Court was inaugurated in Kalpetta, Wayanad district, Kerala by Chief Justice of India Surya Kant."
+            },
+            {
+                category: "Hydroelectric Projects",
+                question: "The Kamala Hydroelectric Project (1,720 MW, approved by PIB at ₹26,070 crore) is located on the Kamala River in which state?",
+                options: ["Arunachal Pradesh", "Uttarakhand", "Himachal Pradesh", "Sikkim"],
+                correct: 0,
+                explanation: "The 1,720 MW Kamala Hydroelectric Project is located on the Kamala River in Arunachal Pradesh."
+            },
+            {
+                category: "Bio-Bitumen Innovations",
+                question: "Which country became the first in the world to commercially produce bio-bitumen (obtained from crop residue/lignin)?",
+                options: ["USA", "India (Inaugurated on NH-44, Nagpur, Maharashtra)", "Germany", "Brazil"],
+                correct: 1,
+                explanation: "India became the first country in the world to commercially produce bio-bitumen from crop residue (lignin), with India's 1st highway using bio-bitumen inaugurated on NH-44, Nagpur, Maharashtra."
+            },
+            {
+                category: "UN International Years",
+                question: "The United Nations has declared 2026 as the International Year of Rangelands and Pastoralists, and also as the International Year of what else?",
+                options: ["The Woman Farmer", "Artificial Intelligence", "Digital Literacy", "Water Conservation"],
+                correct: 0,
+                explanation: "The UN declared 2026 as the International Year of Rangelands and Pastoralists as well as the International Year of the Woman Farmer."
+            },
+            {
+                category: "Global Agriculture",
+                question: "Which country became the world's largest rice producer in 2025 with 150 million tonnes of production, surpassing China?",
+                options: ["China", "India", "Thailand", "Vietnam"],
+                correct: 1,
+                explanation: "India became the world's largest rice producer in 2025 with 150 million tonnes of production, surpassing China. Top Indian states: Uttar Pradesh > Punjab > West Bengal."
+            },
+            {
+                category: "Slum-Free Cities",
+                question: "Which is India's first large city (population over 7 million) to be declared a slum-free city? (Chandigarh is 1st in small city category)",
+                options: ["Lucknow", "Surat", "Chandigarh", "Indore"],
+                correct: 1,
+                explanation: "Surat is India's first large city (population over 7 million) to be declared a slum-free city. Chandigarh is the first in the small city category."
+            },
+            {
+                category: "Sports Coaches",
+                question: "Who has been reappointed as the Chief Coach of the Indian Women's Hockey Team in 2026?",
+                options: ["Sjoerd Marijne", "Craig Fulton", "Harendra Singh", "Graham Reid"],
+                correct: 0,
+                explanation: "Sjoerd Marijne was reappointed as the Chief Coach of the Indian Women's Hockey Team in 2026."
+            },
+            {
+                category: "International Presidents",
+                question: "Mamady Doumbouya became the President of which country?",
+                options: ["Guinea", "Mali", "Senegal", "Guinea-Bissau"],
+                correct: 0,
+                explanation: "Mamady Doumbouya is the President of Guinea."
+            },
+            {
+                category: "Democracy Conferences",
+                question: "Which city hosted the 1st Edition of India International Conference on Democracy and Election Management (IICDEM-2026) at Bharat Mandapam?",
+                options: ["Mumbai", "New Delhi (Hosted by ECI)", "Bengaluru", "Hyderabad"],
+                correct: 1,
+                explanation: "New Delhi hosted the 1st Edition of IICDEM-2026 at Bharat Mandapam, hosted by the Election Commission of India under the theme 'Democracy for an inclusive, peaceful, resilient and sustainable world'."
+            },
+            {
+                category: "Ancient Discoveries",
+                question: "Recently discovered 2,000-year-old bronze coins at Bhir Mound belong to the reign of which Kushan ruler?",
+                options: ["Kanishka", "Vasudeva I", "Huvishka", "Wima Kadphises"],
+                correct: 1,
+                explanation: "2,000-year-old bronze coins discovered at Bhir Mound, Taxila (Pakistan) belong to the reign of Kushan ruler Vasudeva I."
+            },
+            {
+                category: "Modern Warfare Forces",
+                question: "What is the name of the modern warfare force created by the Indian Army with over 1 lakh drone operatives?",
+                options: ["Bhairav", "Param", "Sanjha Shakti", "Aatmanirbhar"],
+                correct: 0,
+                explanation: "'Bhairav' is the modern warfare force created by the Indian Army with over 1 lakh drone operatives."
+            },
+            {
+                category: "Supreme Court MoUs",
+                question: "The Supreme Court of India signed the Law Clerks Exchange MoU with which neighbouring country?",
+                options: ["Nepal", "Bhutan", "Sri Lanka", "Bangladesh"],
+                correct: 1,
+                explanation: "The Supreme Court of India signed the Law Clerks Exchange MoU with Bhutan, enabling 2 law clerks from Bhutan to work at the Supreme Court of India."
+            },
+            {
+                category: "Aquaculture",
+                question: "Where has India's largest inland Rainbow Trout farm been established by SmartGreen Aquaculture in Ranga Reddy District?",
+                options: ["Kerala", "Telangana", "Himachal Pradesh", "Jammu and Kashmir"],
+                correct: 1,
+                explanation: "India's largest inland Rainbow Trout farm (protein-rich fish) has been established in Ranga Reddy District, Telangana by SmartGreen Aquaculture."
+            },
+            {
+                category: "Indian Army Themes",
+                question: "Which year has the Indian Army declared as the 'Year of Networking & Data Centricity'?",
+                options: ["2025", "2026", "2027", "2028"],
+                correct: 1,
+                explanation: "The Indian Army declared 2026 as the 'Year of Networking & Data Centricity'."
+            },
+            {
+                category: "Chess Championships",
+                question: "Who won the Open Title (Gold) at the World Blitz Chess Championship 2025 held in Doha, Qatar?",
+                options: ["Arjun Erigaisi", "Magnus Carlsen (Norway)", "Javokhir Sindarov", "Bibisara Assaubayeva"],
+                correct: 1,
+                explanation: "Magnus Carlsen (Norway) won the Open Title (Gold) at the World Blitz Chess Championship 2025 in Doha, Qatar. India's Arjun Erigaisi won Bronze, while Bibisara Assaubayeva won the women's title."
+            },
+            {
+                category: "Pravasi Bharatiya Divas",
+                question: "When is Pravasi Bharatiya Divas celebrated every year, marking M.K. Gandhi's return from South Africa in 1915?",
+                options: ["4 January", "9 January", "10 January", "12 January"],
+                correct: 1,
+                explanation: "Pravasi Bharatiya Divas is celebrated on 9th January every year, commemorating M.K. Gandhi's return from South Africa on 9th January 1915."
+            },
+            {
+                category: "Parakram Diwas",
+                question: "Parakram Diwas is celebrated on January 23 on the birth anniversary of which freedom fighter (marking his 129th anniversary in 2026)?",
+                options: ["Mahatma Gandhi", "Subhash Chandra Bose", "Bhagat Singh", "Sardar Vallabhbhai Patel"],
+                correct: 1,
+                explanation: "Parakram Diwas is celebrated on January 23 on the birth anniversary of Subhash Chandra Bose (129th birth anniversary in 2026)."
+            },
+            {
+                category: "World Braille Day",
+                question: "When is World Braille Day annually observed on the birth anniversary of Louis Braille?",
+                options: ["4 January", "9 January", "10 January", "16 January"],
+                correct: 0,
+                explanation: "World Braille Day is observed on 4 January on the birth anniversary of Louis Braille."
+            },
+            {
+                category: "High Court Appointments",
+                question: "Who has been appointed as the Chief Justice of Kerala High Court?",
+                options: ["Justice Soumen Sen", "Justice Revati P. Mohite Dere", "Sangam Kumar Sahoo", "Justice A Muhamed Mustaque"],
+                correct: 0,
+                explanation: "Justice Soumen Sen has been appointed as the Chief Justice of Kerala High Court."
+            },
+            {
+                category: "High Court Appointments",
+                question: "Who has been appointed as the 1st Woman Chief Justice of Meghalaya High Court?",
+                options: ["Justice Revati P. Mohite Dere", "Justice Soumen Sen", "Justice A Muhamed Mustaque", "Chandana Sinha"],
+                correct: 0,
+                explanation: "Justice Revati P. Mohite Dere has been appointed as the 1st Woman Chief Justice of Meghalaya High Court."
+            },
+            {
+                category: "World Leprosy Day",
+                question: "When was World Leprosy Day celebrated in 2026 (observed on the last Sunday of January), under the theme 'Leprosy is curable, the real challenge is stigma'?",
+                options: ["25 January", "26 January", "28 January", "31 January"],
+                correct: 0,
+                explanation: "World Leprosy Day 2026 was celebrated on 25 January (last Sunday of January) under the theme 'Leprosy is curable, the real challenge is stigma'. Leprosy is caused by Mycobacterium Leprae."
+            },
+            {
+                category: "Important Days",
+                question: "National Startup Day is celebrated annually on which date, marking the launch of the Startup India initiative in 2016?",
+                options: ["10 January", "12 January", "16 January", "24 January"],
+                correct: 2,
+                explanation: "National Startup Day is celebrated annually on 16 January, marking the launch of the Startup India initiative on 16 January 2016."
+            },
+            {
+                category: "Passings",
+                question: "Which Union Minister and former Indian Olympic Association President passed away at the age of 82 in January 2026?",
+                options: ["Suresh Kalmadi", "William Mark Tully", "Inderjit Singh Bindra", "Ajit Pawar"],
+                correct: 0,
+                explanation: "Suresh Kalmadi, former Union Minister and former Indian Olympic Association President, passed away at the age of 82."
+            },
+            {
+                category: "Passings",
+                question: "Veteran journalist William Mark Tully passed away in January 2026. For which news organisation was he famously the Bureau Chief in New Delhi for over 20 years?",
+                options: ["BBC", "Reuters", "CNN", "The New York Times"],
+                correct: 0,
+                explanation: "Veteran journalist William Mark Tully was famously the BBC Bureau Chief in New Delhi for over 20 years."
+            },
+            {
+                category: "Passings",
+                question: "Inderjit Singh Bindra, who passed away in January 2026, was the former President of which sporting body?",
+                options: ["BCCI", "IOA", "AIFF", "Hockey India"],
+                correct: 0,
+                explanation: "Inderjit Singh Bindra was the former President of the Board of Control for Cricket in India (BCCI)."
+            },
+            {
+                category: "One-Liners",
+                question: "Who has been appointed as the new Maharashtra Police Chief?",
+                options: ["Sadanand Date", "Praveen Vashista", "Rakesh Aggarwal", "Sanjay Singhal"],
+                correct: 0,
+                explanation: "Sadanand Date has been appointed as the new Maharashtra Police Chief."
+            },
+            {
+                category: "One-Liners",
+                question: "Which German Chancellor recently visited India in January 2026?",
+                options: ["Olaf Scholz", "Friedrich Merz", "Angela Merkel", "Annalena Baerbock"],
+                correct: 1,
+                explanation: "German Chancellor Friedrich Merz recently visited India."
+            },
+            {
+                category: "One-Liners",
+                question: "Who has been appointed as Chief Justice of Sikkim High Court?",
+                options: ["Justice A Muhamed Mustaque", "Justice Soumen Sen", "Justice Manoj Kumar Gupta", "Sangam Kumar Sahoo"],
+                correct: 0,
+                explanation: "Justice A. Muhamed Mustaque has been appointed as Chief Justice of Sikkim High Court."
+            },
+            {
+                category: "One-Liners",
+                question: "A new reed snake species named 'Calamaria mizoramensis' was discovered in which Indian state?",
+                options: ["Meghalaya", "Mizoram", "Assam", "Arunachal Pradesh"],
+                correct: 1,
+                explanation: "A new reed snake species named 'Calamaria mizoramensis' was discovered in Mizoram."
+            },
+            {
+                category: "One-Liners",
+                question: "Which city topped India's Women-Friendly Cities List 2025?",
+                options: ["Mumbai", "Bengaluru", "Chennai", "Pune"],
+                correct: 1,
+                explanation: "Bengaluru topped India's Women-Friendly Cities List 2025."
+            },
+            {
+                category: "One-Liners",
+                question: "Who has been appointed as Chief Justice of Uttarakhand High Court?",
+                options: ["Justice Manoj Kumar Gupta", "Justice Soumen Sen", "Justice A Muhamed Mustaque", "Sangam Kumar Sahoo"],
+                correct: 0,
+                explanation: "Justice Manoj Kumar Gupta has been appointed as Chief Justice of Uttarakhand High Court."
+            },
+            {
+                category: "One-Liners",
+                question: "Who has been appointed as Whole-Time Director of Kotak Mahindra Bank?",
+                options: ["Anup Kumar Saha", "Kaizad Bharucha", "Sandeep Bakhshi", "Mitchell Starc"],
+                correct: 0,
+                explanation: "Anup Kumar Saha has been appointed as Whole-Time Director of Kotak Mahindra Bank."
+            },
+            {
+                category: "One-Liners",
+                question: "Which city will host the 9th International Spice Conference?",
+                options: ["Kochi", "Hyderabad", "Bengaluru", "Chennai"],
+                correct: 0,
+                explanation: "Kochi will host the 9th International Spice Conference."
+            },
+            {
+                category: "One-Liners",
+                question: "Who became the first Indian to receive the rare Samurai Martial Arts Honour?",
+                options: ["Pawan Kalyan", "R. Madhavan", "Prosenjit Chatterjee", "Satish Shah"],
+                correct: 0,
+                explanation: "Pawan Kalyan became the first Indian to receive the rare Samurai Martial Arts Honour."
+            },
+            {
+                category: "One-Liners",
+                question: "Which organisation raised India's GDP growth forecast to 7.2% for FY26?",
+                options: ["IMF", "World Bank", "ADB", "RBI"],
+                correct: 1,
+                explanation: "The World Bank raised India's GDP growth forecast to 7.2% for FY26."
+            },
+            {
+                category: "One-Liners",
+                question: "Who is the President of Uganda?",
+                options: ["Yoweri Museveni", "Mamady Doumbouya", "Paul Kagame", "William Ruto"],
+                correct: 0,
+                explanation: "Yoweri Museveni is the President of Uganda."
+            },
+            {
+                category: "One-Liners",
+                question: "Who won the ICC Men's Player of the Month for December 2025?",
+                options: ["Mitchell Starc", "Virat Kohli", "Jasprit Bumrah", "Pat Cummins"],
+                correct: 0,
+                explanation: "Mitchell Starc won the ICC Men's Player of the Month for December 2025."
+            },
+            {
+                category: "One-Liners",
+                question: "Who has been reappointed as MD & CEO of ICICI Bank till 2028?",
+                options: ["Sandeep Bakhshi", "Kaizad Bharucha", "Anup Kumar Saha", "Amitabh Chaudhry"],
+                correct: 0,
+                explanation: "Sandeep Bakhshi has been reappointed as MD & CEO of ICICI Bank till 2028."
+            },
+            {
+                category: "One-Liners",
+                question: "Which city hosted the 6th National Crop Nutrition Summit?",
+                options: ["Mumbai", "New Delhi", "Pune", "Nagpur"],
+                correct: 0,
+                explanation: "Mumbai hosted the 6th National Crop Nutrition Summit."
+            },
+            {
+                category: "Global Updates",
+                question: "Which country recently legalised cryptocurrency mining and exchanges under a new law in January 2026?",
+                options: ["Turkmenistan", "Kazakhstan", "El Salvador", "Uzbekistan"],
+                correct: 0,
+                explanation: "Turkmenistan legalised cryptocurrency mining and exchanges under a new law."
+            },
+            {
+                category: "Global Updates",
+                question: "Which country became the first to officially recognise Somaliland as an independent state?",
+                options: ["Israel", "UAE", "Taiwan", "Ethiopia"],
+                correct: 0,
+                explanation: "Israel became the first country to recognise Somaliland as an independent state."
+            },
+            {
+                category: "Sports - Beach Games",
+                question: "Where did the 2nd Khelo India Beach Games kick off with 2,100+ athletes?",
+                options: ["Ghoghla Beach, Diu", "Juhu Beach, Mumbai", "Marina Beach, Chennai", "Puri Beach, Odisha"],
+                correct: 0,
+                explanation: "The 2nd Khelo India Beach Games kicked off at Ghoghla Beach, Diu with 2,100+ athletes."
+            },
+            {
+                category: "AI Conferences",
+                question: "Which state will host the Regional AI Impact Conference 2026 in Jaipur?",
+                options: ["Rajasthan", "Madhya Pradesh", "Gujarat", "Haryana"],
+                correct: 0,
+                explanation: "Rajasthan will host the Regional AI Impact Conference 2026 in Jaipur."
+            },
+            {
+                category: "Military Drills",
+                question: "China launched which military drills around Taiwan amid rising tensions?",
+                options: ["Justice Mission 2025", "Absolute Resolve", "Freedom Shield", "Dosti 17"],
+                correct: 0,
+                explanation: "China launched 'Justice Mission 2025' military drills around Taiwan."
+            },
+            {
+                category: "GI Tags",
+                question: "'Ponduru Khadi' from which state recently received a Geographical Indication (GI) Tag?",
+                options: ["Andhra Pradesh", "Tamil Nadu", "West Bengal", "Gujarat"],
+                correct: 0,
+                explanation: "'Ponduru Khadi' from Andhra Pradesh received a GI Tag."
+            },
+            {
+                category: "AI Film Awards",
+                question: "Tunisian filmmaker Zoubeir Jlassi won the $1 Million AI Film Award for 'Lily' at which summit?",
+                options: ["Dubai Summit", "New Delhi AI Summit", "Davos WEF", "Singapore Tech Summit"],
+                correct: 0,
+                explanation: "Tunisian filmmaker Zoubeir Jlassi won the $1 Million AI Film Award for 'Lily' at the Dubai Summit."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswers = new Array(quizData.length).fill(null);
+
+        document.getElementById('total-q-num').textContent = quizData.length;
+        document.getElementById('final-total').textContent = quizData.length;
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById('current-q-num').textContent = currentQuestion + 1;
+            document.getElementById('current-score').textContent = score;
+            document.getElementById('question-category').textContent = q.category;
+            document.getElementById('question-text').textContent = q.question;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border transition flex items-center justify-between font-medium text-slate-700 bg-white border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/30`;
+                
+                if (selectedAnswers[currentQuestion] !== null) {
+                    btn.disabled = true;
+                    if (idx === q.correct) {
+                        btn.className = `w-full text-left p-4 rounded-xl border transition flex items-center justify-between font-medium bg-emerald-50 border-emerald-500 text-emerald-900`;
+                    } else if (idx === selectedAnswers[currentQuestion]) {
+                        btn.className = `w-full text-left p-4 rounded-xl border transition flex items-center justify-between font-medium bg-rose-50 border-rose-500 text-rose-900`;
+                    }
+                }
+
+                btn.innerHTML = `<span>${opt}</span>`;
+                btn.onclick = () => selectOption(idx);
+                container.appendChild(btn);
+            });
+
+            const expBox = document.getElementById('explanation-box');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (selectedAnswers[currentQuestion] !== null) {
+                document.getElementById('explanation-text').textContent = q.explanation;
+                expBox.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            } else {
+                expBox.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            }
+
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        }
+
+        function selectOption(idx) {
+            if (selectedAnswers[currentQuestion] !== null) return;
+            
+            selectedAnswers[currentQuestion] = idx;
+            const q = quizData[currentQuestion];
+            
+            if (idx === q.correct) {
+                score++;
+                document.getElementById('current-score').textContent = score;
+            }
+
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showCompletion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showCompletion() {
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('completion-card').classList.remove('hidden');
+            document.getElementById('final-score').textContent = score;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswers = new Array(quizData.length).fill(null);
+            document.getElementById('completion-card').classList.add('hidden');
+            document.getElementById('quiz-card').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Initialize quiz
+        loadQuestion();
+    </script>
+</body>
+</html>
