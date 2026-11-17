@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>October 2026 Monthly Current Affairs Comprehensive Quiz</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #22c55e;
+            --success-bg: #f0fdf4;
+            --error: #ef4444;
+            --error-bg: #fef2f2;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.25rem;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .question-number {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option {
+            background: #ffffff;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .option:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+        .option.selected {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .option.correct {
+            background: var(--success-bg) !important;
+            border-color: var(--success) !important;
+            color: #166534 !important;
+            font-weight: 600;
+        }
+        .option.incorrect {
+            background: var(--error-bg) !important;
+            border-color: var(--error) !important;
+            color: #991b1b !important;
+        }
+        .option:disabled {
+            cursor: default;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        button.btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button.btn:hover {
+            background-color: var(--primary-hover);
+        }
+        button.btn:disabled {
+            background-color: var(--border);
+            cursor: not-allowed;
+        }
+        .results-card {
+            text-align: center;
+            padding: 50px 30px;
+        }
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 auto 25px auto;
+            box-shadow: 0 10px 15px -3px rgb(79 70 229 / 0.4);
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>October 2026 Monthly Current Affairs</h1>
+            <p class="subtitle">Comprehensive Interactive Practice Quiz</p>
+        </header>
+
+        <div id="quiz-container">
+            <div class="stats-bar">
+                <span id="progress-indicator">Question 1 of 97</span>
+                <span id="score-indicator">Score: 0</span>
+            </div>
+
+            <div class="card" id="question-card">
+                <div class="question-number" id="q-number">Question 1</div>
+                <div class="question-text" id="q-text">Loading question...</div>
+                <div class="options" id="options-container"></div>
+                <div class="controls">
+                    <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card results-card hidden" id="results-card">
+            <h1>Quiz Completed! 🎉</h1>
+            <div class="score-circle" id="final-score">0/0</div>
+            <p id="result-message" style="font-size: 1.2rem; margin-bottom: 30px;"></p>
+            <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [{"question": "What is India's rank in the Global Hunger Index (GHI) 2026?", "options": ["84th", "100th", "106th", "122nd"], "answer": "100th"}, {"question": "The Global Hunger Index is released jointly by Concern Worldwide and which other organization?", "options": ["World Health Organization", "Welthungerhilfe", "UNICEF", "World Bank"], "answer": "Welthungerhilfe"}, {"question": "How many component indicators are used to calculate India's GHI score?", "options": ["Two indicators", "Three indicators", "Four indicators", "Five indicators"], "answer": "Four indicators"}, {"question": "Who won the 2026 Ramanujan Prize for Young Mathematicians from Developing Countries?", "options": ["Mahesh Kakde", "Ashoke Sen", "Subhankar Ghosh", "Rajesh Kumar"], "answer": "Mahesh Kakde"}, {"question": "Where was the first BIMSTEC Home Ministers' Meeting held?", "options": ["Dhaka, Bangladesh", "New Delhi, India", "Colombo, Sri Lanka", "Bangkok, Thailand"], "answer": "New Delhi, India"}, {"question": "How many member states comprise BIMSTEC?", "options": ["5 members", "6 members", "7 members", "8 members"], "answer": "7 members"}, {"question": "Who won the Men's Ballon d'Or Award in 2026?", "options": ["Lamine Yamal", "Lionel Messi", "Harry Kane", "Kylian Mbapp\u00e9"], "answer": "Harry Kane"}, {"question": "What rank did the Bihar Museum secure in the 'World's 100 Best Museums 2026' list by Worth a Journey?", "options": ["1st", "5th", "9th", "15th"], "answer": "9th"}, {"question": "Who is the architect who designed the Bihar Museum located in Patna?", "options": ["Fumihiko Maki", "Balkrishna Doshi", "Zaha Hadid", "Norman Foster"], "answer": "Fumihiko Maki"}, {"question": "What was the theme of the 10th India Mobile Congress (IMC) 2026?", "options": ["Digital India, Future Ready", "Scale Without Boundaries", "Connectivity for All", "Next-Gen Networks"], "answer": "Scale Without Boundaries"}, {"question": "What is India's rank in the Rule of Law Index 2026 released by the World Justice Project?", "options": ["75th", "88th", "95th", "102nd"], "answer": "88th"}, {"question": "Which Indian city has been included in National Geographic's 'Best of the World 2027' list?", "options": ["Udaipur", "Jaipur", "Varanasi", "Mysore"], "answer": "Jaipur"}, {"question": "Who won the Best Actor Award at the 26th IIFA Awards 2026?", "options": ["Ranveer Singh", "Shah Rukh Khan", "Ranbir Kapoor", "Vicky Kaushal"], "answer": "Ranveer Singh"}, {"question": "Which Union Territory has officially become India's first 100% Organic UT?", "options": ["Andaman and Nicobar", "Lakshadweep", "Ladakh", "Jammu and Kashmir"], "answer": "Ladakh"}, {"question": "Sukhna Lake, recently designated as a Ramsar Site, is located in which Union Territory?", "options": ["Chandigarh", "Delhi", "Puducherry", "Dadra and Nagar Haveli"], "answer": "Chandigarh"}, {"question": "Sauj Jheel, recently designated as India's 14th Ramsar site in Uttar Pradesh, is located in which district?", "options": ["Mainpuri District", "Varanasi District", "Agra District", "Lucknow District"], "answer": "Mainpuri District"}, {"question": "What is the total financial outlay of the Pradhan Mantri Viksit Gram Swaraj Yojana (PM VGSY)?", "options": ["\u20b95,120.00 Crore", "\u20b97,395.55 Crore", "\u20b911,900.00 Crore", "\u20b953,428.00 Crore"], "answer": "\u20b97,395.55 Crore"}, {"question": "Which ministry launched the PRAGATI-50 initiative to develop 50 clean role-model cities across India?", "options": ["Ministry of Panchayati Raj", "Ministry of Housing and Urban Affairs", "Ministry of Jal Shakti", "Ministry of Environment"], "answer": "Ministry of Housing and Urban Affairs"}, {"question": "In the 57th GST Council Meeting, what was the recommended increase for the criminal prosecution threshold?", "options": ["From \u20b950 Lakh to \u20b92 Crore", "From \u20b91 Crore to \u20b95 Crore", "From \u20b92 Crore to \u20b910 Crore", "From \u20b95 Crore to \u20b920 Crore"], "answer": "From \u20b91 Crore to \u20b95 Crore"}, {"question": "Under which Constitutional Article is the GST Council established?", "options": ["Article 246A", "Article 279A", "Article 324", "Article 360"], "answer": "Article 279A"}, {"question": "Which launch vehicle was used by ISRO to launch the NVS-03 navigation satellite?", "options": ["LVM3-M5", "PSLV-C60", "GSLV-F18", "SSLV-D3"], "answer": "GSLV-F18"}, {"question": "Fairfax Financial of Canada was selected as the strategic buyer to acquire a 60.72% stake in which bank?", "options": ["IDBI Bank", "RBL Bank", "Federal Bank", "Axis Bank"], "answer": "IDBI Bank"}, {"question": "Which district secured the 1st rank among best-performing districts under the PM Dhan-Dhaanya Krishi Yojana?", "options": ["Nagaur, Rajasthan", "Gaya, Bihar", "Karnal, Haryana", "Varanasi, Uttar Pradesh"], "answer": "Gaya, Bihar"}, {"question": "What are the names of the two cheetahs released in Veerangana Durgavati Tiger Reserve in October 2026?", "options": ["Agni and Vayu", "Vyom and Neera", "Dhruv and Tara", "Tejas and Pawan"], "answer": "Vyom and Neera"}, {"question": "Who won India's first-ever women's freestyle gold medal at the Senior World Wrestling Championships 2026?", "options": ["Manisha Bhanwala", "Neelam Sirohi", "Kajal Dhochak", "Tanu Sharma"], "answer": "Manisha Bhanwala"}, {"question": "Who was awarded the Nobel Prize in Literature for 2026?", "options": ["Anne Carson", "Jon Fosse", "Annie Ernaux", "Kazuo Ishiguro"], "answer": "Anne Carson"}, {"question": "Which scientists were awarded the Nobel Prize in Chemistry 2026 for discoveries in asymmetric organic synthesis?", "options": ["Henri B. Kagan and Kenso Soai", "Karl Deisseroth and Peter Hegemann", "Francis Halzen and Georg Nagel", "Robert E. Hall and Michael Woodford"], "answer": "Henri B. Kagan and Kenso Soai"}, {"question": "Optogenetics, recognized in the 2026 Nobel Prize in Physiology or Medicine, uses what medium to control specific nerve cells?", "options": ["Sound waves", "Light", "Magnetic fields", "Electrical micro-impulses"], "answer": "Light"}, {"question": "Francis Halzen won the 2026 Nobel Prize in Physics for his work on which major facility?", "options": ["CERN Large Hadron Collider", "IceCube Neutrino Observatory", "James Webb Space Telescope", "LIGO Gravitational Wave Observatory"], "answer": "IceCube Neutrino Observatory"}, {"question": "Who won the Nobel Peace Prize 2026 for promoting peace and international law?", "options": ["Narges Mohammadi", "Navanethem 'Navi' Pillay", "Ales Bialiatski", "Maria Ressa"], "answer": "Navanethem 'Navi' Pillay"}, {"question": "Who became the first Indian physicist to receive the prestigious Oskar Klein Medal?", "options": ["C.V. Raman", "Ashoke Sen", "Homi B. Bhabha", "Satyendra Nath Bose"], "answer": "Ashoke Sen"}, {"question": "Who won the Young Wildlife Photographer of the Year 2026 award?", "options": ["Oscar Whitfield", "Federico Veronesi", "Ami Vitale", "Tim Laman"], "answer": "Oscar Whitfield"}, {"question": "Who became the first individual footballer to receive the Princess of Asturias Award for Sports in 2026?", "options": ["Cristiano Ronaldo", "Kylian Mbapp\u00e9", "Lionel Messi", "Erling Haaland"], "answer": "Lionel Messi"}, {"question": "Who received the inaugural Bharat Ratna Dr. Bhupen Hazarika National Award 2026?", "options": ["Usha Mangeshkar", "Shreya Ghoshal", "A.R. Rahman", "Lata Mangeshkar"], "answer": "Usha Mangeshkar"}, {"question": "How many total medals did India win at the World Boxing U19 Championships 2026 held in Montenegro?", "options": ["2 medals", "4 medals", "6 medals", "10 medals"], "answer": "4 medals"}, {"question": "Lovlina Borgohain became only the second Indian woman boxer to win an Asian Games Gold Medal after whom?", "options": ["Nikhat Zareen", "MC Mary Kom", "Lovlina's coach", "Sarita Devi"], "answer": "MC Mary Kom"}, {"question": "Which country hosted the 20th Asian Games in 2026?", "options": ["China", "Japan", "South Korea", "Thailand"], "answer": "Japan"}, {"question": "What was India's total medal count at the 20th Asian Games 2026?", "options": ["70 medals", "85 medals (21 Gold, 27 Silver, 37 Bronze)", "107 medals", "114 medals"], "answer": "85 medals (21 Gold, 27 Silver, 37 Bronze)"}, {"question": "Who became the first Indian woman to win an Asian Games individual golf gold medal?", "options": ["Aditi Ashok", "Pranavi Urs", "Diksha Dagar", "Tvesa Malik"], "answer": "Pranavi Urs"}, {"question": "Who scored the winning goal for India in the women's hockey gold medal match against China at the Asian Games 2026?", "options": ["Rani Rampal", "Savita Punia", "Lalremsiami", "Salima Tete"], "answer": "Lalremsiami"}, {"question": "What was India's overall rank and total medal tally at the 2026 Asian Para Games in Aichi-Nagoya, Japan?", "options": ["Second rank with 186 medals", "Third rank with 145 medals", "Fourth rank with 114 medals (30 Gold, 35 Silver, 49 Bronze)", "Fifth rank with 95 medals"], "answer": "Fourth rank with 114 medals (30 Gold, 35 Silver, 49 Bronze)"}, {"question": "Who won the men's singles title at the China Open 2026 tennis tournament?", "options": ["Carlos Alcaraz", "Novak Djokovic", "Jannik Sinner", "Daniil Medvedev"], "answer": "Novak Djokovic"}, {"question": "Who became the youngest female International Master (IM) in chess history at age 11?", "options": ["Bodhana Sivanandan", "Divya Deshmukh", "Koneru Humpy", "Harika Dronavalli"], "answer": "Bodhana Sivanandan"}, {"question": "Putul Sonowal won India's first-ever medal (Bronze) at which prestigious global event held in Australia?", "options": ["World Archery Championship", "World Bowls Champion of Champions 2026", "World Billiards Championship", "Commonwealth Shooting Championship"], "answer": "World Bowls Champion of Champions 2026"}, {"question": "President Droupadi Murmu appointed new governors in six states in October 2026. Who was appointed as the Governor of Sikkim?", "options": ["Dushyant Gautam", "Om Prakash Mathur", "Braj Mohan Ram", "Dr. Sudha Yadav"], "answer": "Dushyant Gautam"}, {"question": "Who has been appointed as the 29th Chief of the Air Staff?", "options": ["Air Marshal Ashutosh Dixit", "Air Marshal Inderpal Singh Walia", "Air Chief Marshal Amar Preet Singh", "Air Marshal R.K. Sadhana"], "answer": "Air Marshal Ashutosh Dixit"}, {"question": "Who replaced Harmanpreet Kaur as the new captain of the Indian Women's Cricket Team?", "options": ["Shafali Verma", "Smriti Mandhana", "Jemimah Rodrigues", "Deepti Sharma"], "answer": "Smriti Mandhana"}, {"question": "Which sports icons were nominated to the 2030 Commonwealth Games Organising Committee in Ahmedabad?", "options": ["Sachin Tendulkar and Virat Kohli", "Saina Nehwal and Rahul Dravid", "Neeraj Chopra and PV Sindhu", "MS Dhoni and Mary Kom"], "answer": "Saina Nehwal and Rahul Dravid"}, {"question": "Which state or union territory launched India's first high-altitude wildlife safari for snow leopards?", "options": ["Himachal Pradesh", "Uttarakhand", "Ladakh", "Jammu and Kashmir"], "answer": "Ladakh"}, {"question": "Nameri Tiger Reserve, which recently received CA|TS-approved status, is located in which state?", "options": ["Assam", "Arunachal Pradesh", "West Bengal", "Madhya Pradesh"], "answer": "Assam"}, {"question": "Which butterfly has been selected as Chhattisgarh's first State Butterfly?", "options": ["Blue Mormon", "Common Jezebel", "Orange Oakleaf", "Malabar Banded Peacock"], "answer": "Orange Oakleaf"}, {"question": "Which port authority is developing India's first Blue Finance Shore Power Project in partnership with IFC?", "options": ["Mumbai Port Authority", "Jawaharlal Nehru Port Authority (JNPA)", "Chennai Port Authority", "Visakhapatnam Port Authority"], "answer": "Jawaharlal Nehru Port Authority (JNPA)"}, {"question": "Uttarakhand's first Glacial Lake Early Warning System has been installed at which lake?", "options": ["Hemkund Lake", "Vasundhara Tal", "Roopkund", "Nainital Lake"], "answer": "Vasundhara Tal"}, {"question": "Which location became India's first plastic-free marine oil terminal?", "options": ["Jawahar Dweep", "Vadinar Oil Terminal", "Paradip Oil Terminal", "Kochi Oil Terminal"], "answer": "Jawahar Dweep"}, {"question": "According to the World Wide Fund for Nature (WWF) Living Planet Report 2026, what was the average decline in monitored wildlife populations?", "options": ["55%", "63%", "73%", "84%"], "answer": "73%"}, {"question": "Where has Himachal Pradesh inaugurated its first solar power project with battery storage in the Spiti Valley?", "options": ["Kaza", "Rongtong, Kaza", "Keylong", "Kalpa"], "answer": "Rongtong, Kaza"}, {"question": "Why was Barda Wildlife Sanctuary in Gujarat recently in the news?", "options": ["Discovery of a new plant species", "Asiatic lions returned to Barda after 144 years", "Designated as a Ramsar site", "Declared a national park"], "answer": "Asiatic lions returned to Barda after 144 years"}, {"question": "The Siang Upper Multipurpose Project (SUMP) is proposed on the Siang River, which is a major tributary of which river?", "options": ["Ganga", "Brahmaputra", "Teesta", "Barak"], "answer": "Brahmaputra"}, {"question": "Where was the 14th edition of India Chem 2026 held?", "options": ["New Delhi", "Mumbai, Maharashtra", "Gandhinagar, Gujarat", "Bengaluru, Karnataka"], "answer": "Mumbai, Maharashtra"}, {"question": "In which country was the 153rd Assembly of the Inter-Parliamentary Union (IPU) held, where Milton Dick became its 32nd President?", "options": ["South Africa", "Tanzania", "Rwanda", "Kenya"], "answer": "Tanzania"}, {"question": "Which Indian institution topped the Times Higher Education (THE) World University Rankings 2027?", "options": ["IIT Bombay", "IISc Bengaluru", "IIT Delhi", "Saveetha Institute of Medical and Technical Sciences"], "answer": "IISc Bengaluru"}, {"question": "According to the WHO-UNICEF report, how many Indian children lacked sanitation services at school in 2025?", "options": ["20 Million", "35 Million", "50 Million", "75 Million"], "answer": "50 Million"}, {"question": "INDRA-2026 is a bilateral naval exercise conducted between India and which country?", "options": ["France", "Russia", "United States", "Japan"], "answer": "Russia"}, {"question": "Which Indian Army regiment won the gold medal at Exercise Cambrian Patrol 2026 in Wales, UK?", "options": ["Parachute Regiment", "Gorkha Rifles", "Assam Regiment", "Sikh Regiment"], "answer": "Assam Regiment"}, {"question": "Exercise AUSTRAHIND 2026 was conducted between India and which country?", "options": ["Austria", "Australia", "New Zealand", "Fiji"], "answer": "Australia"}, {"question": "Exercise SIMBEX-26 was conducted between the navies of India and which nation?", "options": ["Sri Lanka", "Singapore", "Seychelles", "South Korea"], "answer": "Singapore"}, {"question": "Exercise IBSAMAR 2026 involves maritime cooperation between India, Brazil, and which other country?", "options": ["Argentina", "South Africa", "Australia", "Mauritius"], "answer": "South Africa"}, {"question": "Mountain Guardian 2026 is a joint military exercise between India and which country?", "options": ["Oman", "United Arab Emirates", "France", "Japan"], "answer": "United Arab Emirates"}, {"question": "How much investment was approved under PM-SETU for five ITI clusters across Maharashtra, Odisha, and Jammu & Kashmir?", "options": ["\u20b9850.50 Crore", "\u20b91,194.92 Crore", "\u20b92,450.00 Crore", "\u20b95,000.00 Crore"], "answer": "\u20b91,194.92 Crore"}, {"question": "What is the total financial outlay approved for the National Social Assistance Programme (renamed Pradhan Mantri Samajik Sahayata Yojana)?", "options": ["\u20b912,400 Crore", "\u20b928,500 Crore", "\u20b953,428 Crore", "\u20b975,000 Crore"], "answer": "\u20b953,428 Crore"}, {"question": "Which state became India's 6th fully literate state under the ULLAS scheme?", "options": ["Himachal Pradesh", "Uttarakhand", "Sikkim", "Goa"], "answer": "Uttarakhand"}, {"question": "Which Union Territory was declared fully literate under the ULLAS scheme in October 2026?", "options": ["Ladakh", "Chandigarh", "Lakshadweep", "Andaman and Nicobar Islands"], "answer": "Lakshadweep"}, {"question": "What does the acronym JOSH stand for in the newly launched 'JOSH Teams' under TB Mukt Bharat Abhiyaan?", "options": ["Joint Squad For Health", "Junior Officers for Social Health", "Jubilee Outreach for Sanitation and Health", "Joint Surveillance on Healthcare"], "answer": "Joint Squad For Health"}, {"question": "Who launched the 'Khet Bachao Abhiyan - Rabi 2026' in Karnal, Haryana?", "options": ["Narendra Modi", "Shivraj Singh Chouhan", "J.P. Nadda", "Bhupender Yadav"], "answer": "Shivraj Singh Chouhan"}, {"question": "INS Mangrol, commissioned at Naval Dockyard Mumbai, is India's third of eight Indigenous Anti-Submarine Warfare Shallow Water Crafts (ASW SWC) built by which shipyard?", "options": ["Garden Reach Shipbuilders", "Cochin Shipyard", "Mazagon Dock Shipbuilders", "Hindustan Shipyard Limited"], "answer": "Cochin Shipyard"}, {"question": "JWALA-MK1, India's first indigenously developed private-sector micro-missile system, is which type of missile?", "options": ["Anti-Tank Guided Missile", "Short-Range Surface-To-Air Missile (SAM)", "Ballistic Missile", "Air-to-Air Missile"], "answer": "Short-Range Surface-To-Air Missile (SAM)"}, {"question": "What is the name of India's first Indigenous Fleet Support Ship (FSS-1) launched at Hindustan Shipyard Limited?", "options": ["Surya", "Samarthak", "Shreyas", "Mangrol"], "answer": "Surya"}, {"question": "What is the name of India's new national counter-terrorism policy and strategy announced recently?", "options": ["VAJRA", "PRAHAAR", "GARUDA", "VIJAY"], "answer": "PRAHAAR"}, {"question": "Which state launched the 'Vettri Payanam' scheme to provide free bus travel for women and transgender persons?", "options": ["Kerala", "Karnataka", "Tamil Nadu", "Andhra Pradesh"], "answer": "Tamil Nadu"}, {"question": "When is the International Day of Non-Violence observed annually?", "options": ["2 October", "31 October", "15 October", "24 October"], "answer": "2 October"}, {"question": "When is Indian Air Force Day celebrated every year?", "options": ["15 January", "8 October", "4 December", "26 July"], "answer": "8 October"}, {"question": "National Unity Day (Rashtriya Ekta Diwas) is celebrated on 31st October to mark the birth anniversary of whom?", "options": ["Mahatma Gandhi", "Lal Bahadur Shastri", "Sardar Vallabhbhai Patel", "Dr. B.R. Ambedkar"], "answer": "Sardar Vallabhbhai Patel"}, {"question": "United Nations Day and World Polio Day are both observed on which date?", "options": ["11 October", "16 October", "24 October", "31 October"], "answer": "24 October"}, {"question": "Which Indian state launched the country's first dedicated MICE incentive portal to promote business tourism?", "options": ["Goa", "Odisha", "Kerala", "Gujarat"], "answer": "Odisha"}, {"question": "How many Centres of Excellence have been approved for Classical Languages by the Ministry of Education?", "options": ["Three", "Four", "Five", "Six"], "answer": "Five"}, {"question": "Where was the Shinzo Abe Memorial Corridor inaugurated?", "options": ["New Delhi", "Varanasi", "Patna", "Ahmedabad"], "answer": "Varanasi"}, {"question": "Which state launched India's first 3D-printed rural housing pilot project under PMAY-G 2.0?", "options": ["Tamil Nadu", "Andhra Pradesh", "Telangana", "Karnataka"], "answer": "Andhra Pradesh"}, {"question": "Who is the author of the book 'The Evolution Of TV News In India'?", "options": ["Harsaran Bir Kaur Pandey", "Anil K. Antony", "Sunil Gavaskar", "C.P. Radhakrishnan"], "answer": "Harsaran Bir Kaur Pandey"}, {"question": "Which subsidiary of NABARD issued India's first WASH-focused (Water, Sanitation and Hygiene) social bond raising \u20b9180 crore?", "options": ["NABFINS", "NABKISAN Finance Ltd", "NABCONS", "NABARD Consultancy"], "answer": "NABKISAN Finance Ltd"}, {"question": "Which regulatory body launched the 'Samajh Se Investing Simple' campaign under Project Jagrook?", "options": ["RBI", "SEBI", "IRDAI", "PFRDA"], "answer": "Securities and Exchange Board of India (SEBI)"}, {"question": "Which payment bank was recently removed from the Second Schedule of the RBI Act, 1934?", "options": ["Airtel Payments Bank", "India Post Payments Bank", "Paytm Payments Bank Limited", "Fino Payments Bank"], "answer": "Paytm Payments Bank Limited"}, {"question": "In the historic cargo shipment from Bogibeel Terminal (Dibrugarh) to Bangladesh, what product was transported via National Waterway-2?", "options": ["Coal", "Methanol", "Fertilizer", "Rice"], "answer": "Methanol"}, {"question": "The Indian branches of which international bank are approved by the RBI for merger with RBL Bank?", "options": ["Emirates NBD", "Standard Chartered", "HSBC", "DBS Bank"], "answer": "Emirates NBD"}, {"question": "Ambaji Mohanthal Temple Prasad, which recently received a GI Tag, belongs to which state?", "options": ["Rajasthan", "Madhya Pradesh", "Gujarat", "Maharashtra"], "answer": "Gujarat"}, {"question": "With the addition of Sankoo, how many total districts does Ladakh now have?", "options": ["5 districts", "6 districts", "7 districts", "8 districts"], "answer": "8 districts"}, {"question": "Which ministry launched the 'Punah Bharan' mobile application to identify suitable places for groundwater recharge?", "options": ["Ministry of Agriculture", "Ministry of Jal Shakti", "Ministry of Earth Sciences", "Ministry of Environment"], "answer": "Ministry of Jal Shakti"}, {"question": "Under which Constitutional Article did President Droupadi Murmu accept L. Murugan's resignation as Minister of State?", "options": ["Article 74", "Article 75(2)", "Article 78", "Article 85"], "answer": "Article 75(2)"}];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const qNumberEl = document.getElementById('q-number');
+        const qTextEl = document.getElementById('q-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const nextBtnEl = document.getElementById('next-btn');
+        const progressIndicatorEl = document.getElementById('progress-indicator');
+        const scoreIndicatorEl = document.getElementById('score-indicator');
+        const quizContainerEl = document.getElementById('quiz-container');
+        const resultsCardEl = document.getElementById('results-card');
+        const finalScoreEl = document.getElementById('final-score');
+        const resultMessageEl = document.getElementById('result-message');
+
+        function loadQuestion() {
+            answered = false;
+            nextBtnEl.disabled = true;
+            
+            const q = quizData[currentQuestion];
+            qNumberEl.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            qTextEl.innerText = q.question;
+            progressIndicatorEl.innerText = `Question ${currentQuestion + 1} / ${quizData.length}`;
+
+            optionsContainerEl.innerHTML = '';
+            q.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.innerText = option;
+                btn.onclick = () => selectOption(btn, option, q.answer);
+                optionsContainerEl.appendChild(btn);
+            });
+        }
+
+        function selectOption(button, selectedOption, correctAnswer) {
+            if (answered) return;
+            answered = true;
+
+            const buttons = optionsContainerEl.getElementsByClassName('option');
+            for (let btn of buttons) {
+                btn.disabled = true;
+                if (btn.innerText === correctAnswer) {
+                    btn.classList.add('correct');
+                }
+            }
+
+            if (selectedOption === correctAnswer) {
+                score++;
+                scoreIndicatorEl.innerText = `Score: ${score}`;
+            } else {
+                button.classList.add('incorrect');
+            }
+
+            nextBtnEl.disabled = false;
+            if (currentQuestion === quizData.length - 1) {
+                nextBtnEl.innerText = 'View Results';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizContainerEl.classList.add('hidden');
+            resultsCardEl.classList.remove('hidden');
+            finalScoreEl.innerText = `${score}/${quizData.length}`;
+            
+            const percentage = (score / quizData.length) * 100;
+            let msg = '';
+            if (percentage >= 90) {
+                msg = 'Outstanding! You have a phenomenal grasp of current affairs!';
+            } else if (percentage >= 75) {
+                msg = 'Great job! Your preparation is strong and thorough.';
+            } else if (percentage >= 50) {
+                msg = 'Good effort! Review the material to sharpen your knowledge further.';
+            } else {
+                msg = 'Keep practicing! Review the monthly current affairs to boost your score.';
+            }
+            resultMessageEl.innerText = msg;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            scoreIndicatorEl.innerText = `Score: 0`;
+            nextBtnEl.innerText = 'Next Question';
+            resultsCardEl.classList.add('hidden');
+            quizContainerEl.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Initialize Quiz
+        loadQuestion();
+    </script>
+</body>
+</html>
