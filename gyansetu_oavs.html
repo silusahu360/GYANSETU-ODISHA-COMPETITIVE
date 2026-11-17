@@ -8,8 +8,14 @@
 <style>
 :root{--primary:#6d28d9;--deep:#4c1d95;--accent:#fbbf24;--bg:#f5f3ff;--card:#ffffff;--ink:#241746;--muted:#71658b;--line:#e6ddf7;--good:#15803d;--bad:#b91c1c;--pill-bg:#ede9fe;--pill-ink:#6d28d9;}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Oriya","Noto Sans",sans-serif;font-size:17px;line-height:1.55;background:linear-gradient(145deg,#fdf2f8 0%,#f3e8ff 45%,#e0f2fe 100%);background-attachment:fixed;color:var(--ink);min-height:100vh;padding-bottom:76px;}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Oriya","Noto Sans",sans-serif;font-size:17px;line-height:1.55;background:linear-gradient(145deg,#fdf2f8 0%,#f3e8ff 45%,#e0f2fe 100%);background-attachment:fixed;color:var(--ink);min-height:100vh;padding-bottom:76px;transition:background .2s;}
 body.dark{--bg:#101827;--card:#1d293b;--ink:#edf2f7;--muted:#aab7c8;--line:#344256;--pill-bg:#312e81;--pill-ink:#e0e7ff;background:linear-gradient(145deg,#111827,#1e1b4b 55%,#172554);background-attachment:fixed;}
+
+/* ===== QUIZ MODE: Hide header, remove padding ===== */
+body.quiz-mode header{display:none}
+body.quiz-mode{padding-bottom:0}
+body.quiz-mode main{padding:8px 14px 10px}
+
 header{background:linear-gradient(115deg,#4c1d95 0%,#7c3aed 42%,#db2777 100%);color:#fff;text-align:center;padding:14px 54px 14px 12px;position:sticky;top:0;z-index:5;box-shadow:0 4px 14px rgba(0,0,0,0.15);border-bottom:4px solid #fbbf24;}
 .brand{font-size:clamp(20px,5vw,26px);font-weight:850}
 .brand span{color:#fde68a}
@@ -56,8 +62,6 @@ body.dark .back.home-alt{background:linear-gradient(135deg,#312e81,#1d293b);colo
 body.dark .status-pill{background:linear-gradient(135deg,#1e1b4b,#312e81);border-color:#6d28d9;color:#e0e7ff}
 .dot{width:9px;height:9px;background:#22c55e;border-radius:50%;box-shadow:0 0 8px #22c55e}
 .muted{color:var(--muted);font-size:15px;line-height:1.5}
-.quiz-timer-strip{position:sticky;top:var(--hdr,84px);z-index:9;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(100deg,#4c1d95,#7c3aed);color:#fff;padding:10px 16px;border-radius:12px;margin-bottom:12px;box-shadow:0 6px 18px rgba(76,29,149,0.3)}
-.quiz-time-badge{font-size:19px;font-weight:850;color:#fde68a;font-family:monospace;letter-spacing:1px}
 .subject-group{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
 .subject-header{font-size:16px;font-weight:800;color:#6d28d9;display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1.5px dashed var(--line);margin-bottom:8px}
 body.dark .subject-header{color:#c4b5fd}
@@ -69,7 +73,6 @@ body.dark .subject-header{color:#c4b5fd}
 .modal-overlay.active{display:flex}
 .modal-box{background:var(--card);color:var(--ink);border-radius:18px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 12px 36px rgba(0,0,0,0.35);border:2px solid #a78bfa}
 .msg-text{font-size:18px;font-weight:700;margin:6px 0 18px;white-space:pre-line;line-height:1.5;word-break:break-word}
-.paused-box{margin:18px 0;padding:12px;background:var(--pill-bg);border-radius:12px;font-size:18px;font-weight:800;color:var(--pill-ink)}
 .dev-badge-card{margin-top:20px;padding:16px 14px;background:linear-gradient(135deg,rgba(109,40,217,.08),rgba(219,39,119,.08));border:1.5px solid #c4b5fd;border-radius:14px;text-align:center}
 .dev-tag{display:inline-block;font-size:11px;font-weight:750;letter-spacing:1px;color:#7c3aed;text-transform:uppercase;background:#ede9fe;padding:3px 10px;border-radius:20px;margin-bottom:6px}
 .dev-name{font-size:21px;font-weight:850;color:#4c1d95;display:flex;align-items:center;justify-content:center;gap:6px}
@@ -82,57 +85,23 @@ footer{text-align:center;padding:18px 12px 20px;color:#6b5b86;font-size:12px}
 body.dark footer{color:#aab7c8}
 @media(max-width:380px){.btnrow{grid-template-columns:1fr}.grid{gap:8px}.btnrow3{grid-template-columns:1fr}}
 
-/* PROFESSIONAL TIME & CALENDAR WIDGET */
-.pro-widget {
-  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,243,255,0.9) 100%);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(167, 139, 250, 0.4);
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 30px rgba(109, 40, 217, 0.12);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-body.dark .pro-widget {
-  background: linear-gradient(135deg, rgba(29,41,59,0.95) 0%, rgba(23,37,84,0.9) 100%);
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-.pro-widget::before {
-  content: ''; position: absolute; top: -50%; right: -10%; width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%);
-  border-radius: 50%; pointer-events: none;
-}
-.pro-top { display: flex; justify-content: space-between; align-items: flex-start; }
-.pro-greeting { display: flex; flex-direction: column; gap: 2px; }
-.pro-hello { font-size: 22px; font-weight: 900; color: #4c1d95; }
-body.dark .pro-hello { color: #fde68a; }
-.pro-sub { font-size: 13px; color: #71658b; font-weight: 600; }
-body.dark .pro-sub { color: #aab7c8; }
-.pro-clock-box {
-  background: linear-gradient(135deg, #4c1d95, #6d28d9);
-  padding: 8px 14px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(76,29,149,0.3);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.pro-clock { font-family: 'Courier New', monospace; font-size: 24px; font-weight: 900; color: #fde68a; letter-spacing: 1.5px; line-height: 1; }
-.pro-date-row {
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(237, 233, 254, 0.6);
-  padding: 8px 12px; border-radius: 10px; margin-top: 4px;
-  border: 1px solid rgba(167, 139, 250, 0.3);
-}
-body.dark .pro-date-row { background: rgba(49, 46, 129, 0.4); border-color: rgba(139, 92, 246, 0.3); }
-.pro-date-left { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 750; color: #5b21b6; }
-body.dark .pro-date-left { color: #c4b5fd; }
-.pro-quote { font-size: 12.5px; font-style: italic; color: #64748b; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 8px; margin-top: 2px; }
-body.dark .pro-quote { color: #94a3b8; border-color: #475569; }
+.pro-widget{background:linear-gradient(135deg,rgba(255,255,255,0.95) 0%,rgba(245,243,255,0.9) 100%);backdrop-filter:blur(10px);border:1px solid rgba(167,139,250,0.4);border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 10px 30px rgba(109,40,217,0.12);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;}
+body.dark .pro-widget{background:linear-gradient(135deg,rgba(29,41,59,0.95) 0%,rgba(23,37,84,0.9) 100%);border-color:rgba(139,92,246,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.pro-widget::before{content:'';position:absolute;top:-50%;right:-10%;width:150px;height:150px;background:radial-gradient(circle,rgba(251,191,36,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
+.pro-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.pro-greeting{display:flex;flex-direction:column;gap:2px;}
+.pro-hello{font-size:22px;font-weight:900;color:#4c1d95;}
+body.dark .pro-hello{color:#fde68a;}
+.pro-sub{font-size:13px;color:#71658b;font-weight:600;}
+body.dark .pro-sub{color:#aab7c8;}
+.pro-clock-box{background:linear-gradient(135deg,#4c1d95,#6d28d9);padding:8px 14px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(76,29,149,0.3);border:1px solid rgba(255,255,255,0.2);}
+.pro-clock{font-family:'Courier New',monospace;font-size:24px;font-weight:900;color:#fde68a;letter-spacing:1.5px;line-height:1;}
+.pro-date-row{display:flex;justify-content:space-between;align-items:center;background:rgba(237,233,254,0.6);padding:8px 12px;border-radius:10px;margin-top:4px;border:1px solid rgba(167,139,250,0.3);}
+body.dark .pro-date-row{background:rgba(49,46,129,0.4);border-color:rgba(139,92,246,0.3);}
+.pro-date-left{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:750;color:#5b21b6;}
+body.dark .pro-date-left{color:#c4b5fd;}
+.pro-quote{font-size:12.5px;font-style:italic;color:#64748b;text-align:center;border-top:1px dashed #cbd5e1;padding-top:8px;margin-top:2px;}
+body.dark .pro-quote{color:#94a3b8;border-color:#475569;}
 
 .section-title{font-size:12.5px;color:var(--muted);margin:18px 0 10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;}
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
@@ -140,7 +109,6 @@ body.dark .pro-quote { color: #94a3b8; border-color: #475569; }
 .quick-btn span:first-child{font-size:22px;line-height:1;}
 .quick-btn:active{transform:scale(.94);background:var(--pill-bg);}
 
-/* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1.5px solid var(--line);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:60;box-shadow:0 -6px 18px rgba(76,29,149,.12);}
 .bottom-nav.hidden{display:none;}
 .nav-item{flex:1;background:none;border:0;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:10.5px;font-weight:750;cursor:pointer;border-radius:10px;transition:.15s;font-family:inherit;}
@@ -148,6 +116,9 @@ body.dark .pro-quote { color: #94a3b8; border-color: #475569; }
 .nav-item.active{color:var(--primary);background:var(--pill-bg);}
 .nav-item.active .nav-icon{transform:scale(1.15);}
 body.dark .nav-item.active{color:#c4b5fd;}
+
+/* Full-height quiz frame — no timer, no header */
+#quizFrame{width:100%;height:calc(100vh - 90px);min-height:360px;border:0;display:block;background:#fff;}
 </style>
 </head>
 <body>
@@ -161,7 +132,6 @@ body.dark .nav-item.active{color:#c4b5fd;}
 <main>
 <!-- HOME SCREEN -->
 <section id="home" class="screen active">
-  
   <div class="pro-widget">
     <div class="pro-top">
       <div class="pro-greeting">
@@ -251,19 +221,13 @@ body.dark .nav-item.active{color:#c4b5fd;}
 <button type="button" class="back" onclick="goBack()">← Back</button>
 </section>
 
+<!-- QUIZ SCREEN — NO TIMER, NO BANNER -->
 <section id="quizScreen" class="screen">
-<div id="quizTimerBar" class="quiz-timer-strip">
-<div style="display:flex;align-items:center;gap:8px;">
-<span style="font-size:15px;font-weight:700;">⏱ TIME:</span>
-<span id="quizRunningTimer" class="quiz-time-badge">00:00</span>
-</div>
-<button type="button" class="btn secondary" style="padding:6px 14px;font-size:13px;border-radius:8px;" onclick="pauseQuiz()">👁 Hide</button>
-</div>
 <div id="noteActionToolbar" style="display:none;margin-bottom:10px;gap:8px;">
 <button type="button" id="quizSaveBtn" class="btn green full" style="display:none" onclick="saveCurrentQuizOffline()">💾 Download for Offline</button>
 </div>
 <div id="quizFrameContainer" style="width:100%;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,0.1);">
-<iframe id="quizFrame" style="width:100%;height:72vh;border:0;display:block;" title="Content Viewer" onload="hookQuizFrame()"></iframe>
+<iframe id="quizFrame" title="Content Viewer" onload="hookQuizFrame()"></iframe>
 </div>
 <div class="btnrow" style="margin-top:14px;">
 <button type="button" id="viewerBackButton" class="back" style="margin-top:0;" onclick="handleViewerBack()">← Back</button>
@@ -278,16 +242,6 @@ body.dark .nav-item.active{color:#c4b5fd;}
 <button type="button" class="btn red full" id="wrongClearBtn" onclick="clearWrongQs()">🗑 Clear All</button>
 <button type="button" class="back" onclick="goBack()">← Back</button>
 </section>
-
-<div id="pauseModal" class="modal-overlay">
-<div class="modal-box">
-<h3 style="color:#7c3aed;margin-top:0;font-size:22px;">👁 Quiz Hidden</h3>
-<p class="muted">Quiz ଭିତରେ ଚାଲୁ ଅଛି, କେବଳ app timer ସ୍ଥଗିତ ଅଛି।</p>
-<div class="paused-box">App timer: <span id="pausedTimeText" style="font-family:monospace;">00:00</span></div>
-<button type="button" class="btn green full" onclick="resumeQuiz()">▶ RETURN TO QUIZ</button>
-<button type="button" class="btn red full" onclick="closePauseAndExit()">Exit Practice</button>
-</div>
-</div>
 
 <div id="updateModal" class="modal-overlay">
 <div class="modal-box">
@@ -346,6 +300,7 @@ body.dark .nav-item.active{color:#c4b5fd;}
 <div class="dev-desc">Dedicated to empowering OAVS aspirants with smart notes and MCQ practice.</div>
 </div>
 </div>
+<button type="button" class="btn cyan full" onclick="testIndexedDB()">🧪 Test Storage (IndexedDB)</button>
 <button type="button" class="btn purple full" onclick="checkForAppUpdate(true)">🔄 Check for Updates</button>
 <button type="button" class="back" onclick="goBack()">← Back</button>
 </section>
@@ -389,12 +344,12 @@ function confirmAnswer(yes) {
   if (!yes && typeof nb === "function") nb();
 }
 
-const CURRENT_APP_VERSION = "v1.4.1";
+const CURRENT_APP_VERSION = "v1.5.0";
 const GITHUB_PAGES_BASE = "https://silusahu360.github.io/GYANSETU-ODISHA-COMPETITIVE/";
 const GITHUB_MCQ_JSON_URL = GITHUB_PAGES_BASE + "mcq_data.json";
 const GITHUB_VERSION_JSON_URL = GITHUB_PAGES_BASE + "version.json";
 const APP_SHARE_LINK = "https://github.com/silusahu360/GYANSETU-ODISHA-COMPETITIVE/releases/download/v1.0/GyanSetuOAVS.apk";
-let APP_DOWNLOAD_LINK = "https://github.com/silusahu360/GYANSETU-ODISHA-COMPETITIVE/releases/download/v1.0/GyanSetuOAVS.apk";
+let APP_DOWNLOAD_LINK = APP_SHARE_LINK;
 
 const OAVS_DEFAULT_FOLDER = "";
 const oavsDriveFolders = {
@@ -427,15 +382,12 @@ let currentQuizUrl = "";
 let currentQuizTitle = "";
 let activeQuizLabel = "";
 let currentQuizHtml = "";
-let quizSeconds = 0;
-let quizTimerInterval = null;
-let isQuizPaused = false;
 let studySeconds = 0;
 let studyInterval = null;
 const $ = id => document.getElementById(id);
 
 // ==========================================
-// 2. SAFE STORAGE SYSTEM
+// 2. SAFE STORAGE (localStorage + AppInventor bridge)
 // ==========================================
 const memoryFallback = {};
 const lastBridgeJson = {};
@@ -541,7 +493,155 @@ function store(key, value) {
 }
 
 // ==========================================
-// 3. APP UPDATE & NETWORK
+// 3. INDEXEDDB — UNLIMITED QUIZ STORAGE
+// ==========================================
+const IDB_NAME = 'gso_db';
+const IDB_VERSION = 1;
+const IDB_STORE = 'quizzes';
+let _idbPromise = null;
+
+function openIDB() {
+  if (_idbPromise) return _idbPromise;
+  _idbPromise = new Promise((res, rej) => {
+    if (!window.indexedDB) { rej(new Error("IndexedDB not supported")); return; }
+    const req = indexedDB.open(IDB_NAME, IDB_VERSION);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(IDB_STORE)) {
+        db.createObjectStore(IDB_STORE, { keyPath: 'id' });
+      }
+    };
+    req.onsuccess = () => res(req.result);
+    req.onerror = () => rej(req.error);
+    req.onblocked = () => rej(new Error("IDB blocked"));
+  });
+  return _idbPromise;
+}
+
+function idbPut(id, title, content) {
+  return openIDB().then(db => new Promise((res, rej) => {
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    tx.objectStore(IDB_STORE).put({
+      id, title, content,
+      size: content.length,
+      date: new Date().toLocaleDateString('or-IN')
+    });
+    tx.oncomplete = () => res(true);
+    tx.onerror = () => rej(tx.error);
+    tx.onabort = () => rej(tx.error || new Error("aborted"));
+  }));
+}
+function idbGet(id) {
+  return openIDB().then(db => new Promise((res, rej) => {
+    const req = db.transaction(IDB_STORE, 'readonly').objectStore(IDB_STORE).get(id);
+    req.onsuccess = () => res(req.result || null);
+    req.onerror = () => rej(req.error);
+  }));
+}
+function idbDelete(id) {
+  return openIDB().then(db => new Promise((res, rej) => {
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    tx.objectStore(IDB_STORE).delete(id);
+    tx.oncomplete = () => res(true);
+    tx.onerror = () => rej(tx.error);
+  }));
+}
+function idbList() {
+  return openIDB().then(db => new Promise((res, rej) => {
+    const req = db.transaction(IDB_STORE, 'readonly').objectStore(IDB_STORE).getAll();
+    req.onsuccess = () => res(req.result || []);
+    req.onerror = () => rej(req.error);
+  }));
+}
+
+async function storageQuota() {
+  try {
+    if (!navigator.storage || !navigator.storage.estimate) return null;
+    const e = await navigator.storage.estimate();
+    return {
+      used: e.usage || 0,
+      quota: e.quota || 0,
+      percent: e.quota ? ((e.usage || 0) / e.quota * 100) : 0
+    };
+  } catch (_) { return null; }
+}
+
+// Stable hash ID from title
+function qid(title) {
+  let h = 5381;
+  const s = String(title);
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return 'q' + (h >>> 0).toString(36);
+}
+
+async function saveQuizToStorage(title, html) {
+  try {
+    const id = qid(title);
+    await idbPut(id, title, html);
+    const back = await idbGet(id);
+    if (!back || back.content !== html) return { ok: false, error: 'Verification failed after save' };
+    return { ok: true, id };
+  } catch (e) { return { ok: false, error: e.message || String(e) }; }
+}
+async function loadQuizFromStorage(id) {
+  try { return await idbGet(id); } catch (e) { console.error(e); return null; }
+}
+async function deleteQuizFromStorage(id) {
+  try { return await idbDelete(id); } catch (e) { console.error(e); return false; }
+}
+
+// Migrate old localStorage quizzes to IndexedDB (once)
+let _migrationPromise = null;
+function ensureMigration() {
+  if (_migrationPromise) return _migrationPromise;
+  _migrationPromise = (async () => {
+    try {
+      if (load("gs_idb_migrated", "0") === "1") return;
+      const old = load("gs_saved_mcqs", null);
+      if (old && Object.keys(old).length) {
+        for (const key of Object.keys(old)) {
+          const item = old[key];
+          if (item && item.content) {
+            try { await idbPut(qid(key), item.title || key, item.content); } catch (e) {}
+          }
+        }
+        store("gs_saved_mcqs", {});
+        flushNow();
+      }
+      store("gs_idb_migrated", "1");
+      flushNow();
+    } catch (e) { console.error("Migration error:", e); }
+  })();
+  return _migrationPromise;
+}
+
+async function testIndexedDB() {
+  try {
+    const testData = 'x'.repeat(11000);
+    await idbPut('__test__', 'Test', testData);
+    const back = await idbGet('__test__');
+    await idbDelete('__test__');
+    if (back && back.content === testData) {
+      const q = await storageQuota();
+      let msg = "✅ IndexedDB ସଫଳ!\n\n";
+      if (q) {
+        msg += "Used: " + fmtBytes(q.used) + "\n";
+        msg += "Quota: " + fmtBytes(q.quota) + "\n";
+        msg += "Free: " + fmtBytes(q.quota - q.used);
+      } else {
+        msg += "(Quota info unavailable)";
+      }
+      alert(msg);
+    } else {
+      alert("⚠️ IndexedDB write/read mismatch।");
+    }
+  } catch (e) {
+    alert("❌ IndexedDB ବିଫଳ: " + (e.message || e));
+  }
+}
+
+// ==========================================
+// 4. APP UPDATE & NETWORK
 // ==========================================
 function parseVer(v) { return String(v || "").replace(/^[^\d]*/, "").split(".").map(n => parseInt(n, 10) || 0); }
 function isNewerVersion(remote, local) {
@@ -566,15 +666,11 @@ async function checkForAppUpdate(manualCheck) {
       $("updateMessage").textContent = "ଜ୍ଞାନସେତୁ ଓଡ଼ିଶାର ଏକ ନୂତନ ଭର୍ସନ୍ (" + data.version + ") ଉପଲବ୍ଧ ଅଛି। " + (data.notes || "");
       $("updateModal").classList.add("active");
     } else {
-      if (manualCheck) {
-        alert("✅ ଆପଣଙ୍କ ଆପ୍ Latest Version (" + CURRENT_APP_VERSION + ") ରେ ଅଛି।");
-      }
+      if (manualCheck) alert("✅ ଆପଣଙ୍କ ଆପ୍ Latest Version (" + CURRENT_APP_VERSION + ") ରେ ଅଛି।");
     }
   } catch (err) {
     console.error("Update check error:", err);
-    if (manualCheck) {
-      alert("❌ ଅପଡେଟ୍ ଯାଞ୍ଚ ବିଫଳ। ଇଣ୍ଟରନେଟ୍ ଯାଞ୍ଚ କରନ୍ତୁ।");
-    }
+    if (manualCheck) alert("❌ ଅପଡେଟ୍ ଯାଞ୍ଚ ବିଫଳ। ଇଣ୍ଟରନେଟ୍ ଯାଞ୍ଚ କରନ୍ତୁ।");
   }
 }
 
@@ -585,13 +681,13 @@ function performAppUpdate() {
 }
 
 // ==========================================
-// 4. LIVE TIME & CALENDAR
+// 5. LIVE TIME & CALENDAR
 // ==========================================
 function updateLiveDateTime() {
   const now = new Date();
   const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-  const days = ['ରବିବାର', 'ସୋମବାର', 'ମଙ୍ଗଳବାର', 'ବୁଧବାର', 'ଗୁରୁବାର', 'ଶୁକ୍ରବାର', 'ଶନିବାର'];
-  const months = ['ଜାନୁଆରୀ', 'ଫେବୃଆରୀ', 'ମାର୍ଚ୍ଚ', 'ଏପ୍ରିଲ', 'ମେ', 'ଜୁନ', 'ଜୁଲାଇ', 'ଅଗଷ୍ଟ', 'ସେପ୍ଟେମ୍ବର', 'ଅକ୍ଟୋବର', 'ନଭେମ୍ବର', 'ଡିସେମ୍ବର'];
+  const days = ['ରବିବାର','ସୋମବାର','ମଙ୍ଗଳବାର','ବୁଧବାର','ଗୁରୁବାର','ଶୁକ୍ରବାର','ଶନିବାର'];
+  const months = ['ଜାନୁଆରୀ','ଫେବୃଆରୀ','ମାର୍ଚ୍ଚ','ଏପ୍ରିଲ','ମେ','ଜୁନ','ଜୁଲାଇ','ଅଗଷ୍ଟ','ସେପ୍ଟେମ୍ବର','ଅକ୍ଟୋବର','ନଭେମ୍ବର','ଡିସେମ୍ବର'];
   const dateStr = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
   const dayStr = days[now.getDay()];
   const quotes = [
@@ -602,8 +698,7 @@ function updateLiveDateTime() {
     "ନିଜକୁ ବିଶ୍ୱାସ କର, ତୁମେ ପାରିବ।",
     "ପ୍ରତ୍ୟେକ ଦିନ ଏକ ନୂଆ ସୁଯୋଗ।"
   ];
-  const quoteIndex = now.getDate() % quotes.length;
-
+  const qi = now.getDate() % quotes.length;
   const timeEl = document.getElementById('liveTime');
   const dateEl = document.getElementById('liveDate');
   const dayEl = document.getElementById('liveDay');
@@ -611,13 +706,13 @@ function updateLiveDateTime() {
   if (timeEl) timeEl.textContent = timeStr;
   if (dateEl) dateEl.textContent = dateStr;
   if (dayEl) dayEl.textContent = dayStr;
-  if (quoteEl) quoteEl.textContent = '"' + quotes[quoteIndex] + '"';
+  if (quoteEl) quoteEl.textContent = '"' + quotes[qi] + '"';
 }
 updateLiveDateTime();
 setInterval(updateLiveDateTime, 1000);
 
 // ==========================================
-// 5. NAVIGATION & BACK BUTTON HANDLER
+// 6. NAVIGATION & BACK BUTTON
 // ==========================================
 let backStack = ["home"];
 function lsGet(k) { try { return hasLocalStorage ? localStorage.getItem(k) : (memoryFallback[k] || null); } catch (e) { return null; } }
@@ -625,44 +720,42 @@ function lsSet(k, v) { memoryFallback[k] = v; try { if (hasLocalStorage) localSt
 let savedScreen = lsGet("gs_last_screen");
 if (["classes","subjects","months","folder","quizScreen"].indexOf(savedScreen) !== -1) savedScreen = "home";
 if (savedScreen && document.getElementById(savedScreen)) {
-    backStack = [savedScreen];
+  backStack = [savedScreen];
 }
 
 function pushHistoryState(screenId) {
-    lsSet("gs_last_screen", screenId);
-    if (backStack[backStack.length - 1] !== screenId) {
-        backStack.push(screenId);
-        history.pushState({ screen: screenId }, "", "#" + screenId);
-    }
+  lsSet("gs_last_screen", screenId);
+  if (backStack[backStack.length - 1] !== screenId) {
+    backStack.push(screenId);
+    history.pushState({ screen: screenId }, "", "#" + screenId);
+  }
 }
 
 window.addEventListener("popstate", function (e) {
-    const currentActive = document.querySelector(".screen.active");
-    if (currentActive && currentActive.id === "quizScreen") {
-        cleanViewerFrame();
-    }
+  const currentActive = document.querySelector(".screen.active");
+  if (currentActive && currentActive.id === "quizScreen") cleanViewerFrame();
 
-    if (backStack.length > 1) {
-        backStack.pop(); 
-        let prevScreen = backStack[backStack.length - 1];
-        let target = document.getElementById(prevScreen) || document.getElementById("home");
-        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-        target.classList.add("active");
-        window.scrollTo(0, 0);
-        
-        if (prevScreen === "bookmarks") renderBookmarks();
-        if (prevScreen === "offlineQuizMenuScreen") renderDownloadedQuizList();
-        if (prevScreen === "wrongScreen") renderWrongQs();
-        updateBottomNav(prevScreen);
-        lsSet("gs_last_screen", prevScreen);
-    } else {
-        askConfirm("ଆପ୍ ବନ୍ଦ କରିବାକୁ ଚାହାଁନ୍ତି କି?", function () {
-            flushNow();
-            if (!sendBridge("CLOSE_APP")) { window.close(); }
-        }, function () {
-            history.pushState({ screen: "home" }, "", "#home");
-        });
-    }
+  if (backStack.length > 1) {
+    backStack.pop();
+    let prevScreen = backStack[backStack.length - 1];
+    let target = document.getElementById(prevScreen) || document.getElementById("home");
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    target.classList.add("active");
+    document.body.classList.toggle("quiz-mode", target.id === "quizScreen");
+    window.scrollTo(0, 0);
+    if (prevScreen === "bookmarks") renderBookmarks();
+    if (prevScreen === "offlineQuizMenuScreen") renderDownloadedQuizList();
+    if (prevScreen === "wrongScreen") renderWrongQs();
+    updateBottomNav(prevScreen);
+    lsSet("gs_last_screen", prevScreen);
+  } else {
+    askConfirm("ଆପ୍ ବନ୍ଦ କରିବାକୁ ଚାହାଁନ୍ତି କି?", function () {
+      flushNow();
+      if (!sendBridge("CLOSE_APP")) window.close();
+    }, function () {
+      history.pushState({ screen: "home" }, "", "#home");
+    });
+  }
 });
 
 history.replaceState({ screen: savedScreen || "home" }, "", "#" + (savedScreen || "home"));
@@ -670,14 +763,13 @@ history.replaceState({ screen: savedScreen || "home" }, "", "#" + (savedScreen |
 window.addEventListener("load", function() {
   syncHeaderHeight();
   applyStoredPrefs();
-  if (savedScreen && document.getElementById(savedScreen)) {
-      showScreen(savedScreen, false);
-  }
-  setTimeout(() => { checkForAppUpdate(false); }, 2000);
+  ensureMigration();  // Migrate old quizzes once
+  if (savedScreen && document.getElementById(savedScreen)) showScreen(savedScreen, false);
+  setTimeout(() => checkForAppUpdate(false), 2000);
 });
 
 // ==========================================
-// 6. UTILS & ROUTING
+// 7. UTILS & ROUTING
 // ==========================================
 function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
@@ -712,14 +804,11 @@ function updateBottomNav(id){
 
 function showScreen(id, pushHistory = true) {
   let target = $(id) || $("home");
-  
   const currentActive = document.querySelector(".screen.active");
-  if (currentActive && currentActive.id !== id) {
-      if (currentActive.id === "quizScreen") {
-          cleanViewerFrame();
-      }
+  if (currentActive && currentActive.id !== id && currentActive.id === "quizScreen") {
+    cleanViewerFrame();
   }
-
+  document.body.classList.toggle("quiz-mode", id === "quizScreen");
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   target.classList.add("active");
   window.scrollTo(0, 0);
@@ -733,7 +822,7 @@ function showScreen(id, pushHistory = true) {
 function goBack(){ history.back(); }
 
 // ==========================================
-// 7. STUDY MATERIALS
+// 8. STUDY MATERIALS
 // ==========================================
 function showClasses() { showSubjects("OAVS"); }
 
@@ -784,30 +873,36 @@ function openSubject(sub) {
 }
 
 // ==========================================
-// 8. MCQ & VIEWER LOGIC
+// 9. MCQ & VIEWER LOGIC
 // ==========================================
 function cleanViewerFrame() {
-  clearInterval(quizTimerInterval); quizTimerInterval = null;
-  isQuizPaused = false; currentQuizHtml = ""; currentQuizTitle = ""; currentQuizUrl = "";
-  $("noteActionToolbar").style.display = "none";
-  $("pauseModal").classList.remove("active");
-  if ($("quizFrame")) $("quizFrame").srcdoc = "";
+  if (typeof wrongObserver !== "undefined" && wrongObserver) {
+    try { wrongObserver.disconnect(); } catch (e) {}
+    wrongObserver = null;
+  }
+  currentQuizHtml = "";
+  currentQuizTitle = "";
+  currentQuizUrl = "";
+  const toolbar = $("noteActionToolbar");
+  if (toolbar) toolbar.style.display = "none";
+  const frame = $("quizFrame");
+  if (frame) frame.srcdoc = "";
 }
 
 function handleViewerBack() {
   cleanViewerFrame();
   if (currentViewMode === "quiz") {
-      showScreen("mcqSetup", false);
-      backStack = ["home", "mcqSetup"];
-      history.replaceState({ screen: "mcqSetup" }, "", "#mcqSetup");
+    showScreen("mcqSetup", false);
+    backStack = ["home", "mcqSetup"];
+    history.replaceState({ screen: "mcqSetup" }, "", "#mcqSetup");
   } else if (currentViewMode === "downloaded_quiz") {
-      showScreen("offlineQuizMenuScreen", false);
-      backStack = ["home", "offlineQuizMenuScreen"];
-      history.replaceState({ screen: "offlineQuizMenuScreen" }, "", "#offlineQuizMenuScreen");
+    showScreen("offlineQuizMenuScreen", false);
+    backStack = ["home", "offlineQuizMenuScreen"];
+    history.replaceState({ screen: "offlineQuizMenuScreen" }, "", "#offlineQuizMenuScreen");
   } else {
-      showScreen("subjects", false);
-      backStack = ["home", "subjects"];
-      history.replaceState({ screen: "subjects" }, "", "#subjects");
+    showScreen("subjects", false);
+    backStack = ["home", "subjects"];
+    history.replaceState({ screen: "subjects" }, "", "#subjects");
   }
 }
 
@@ -819,17 +914,24 @@ function goHomeFromViewer() {
 }
 
 async function saveCurrentQuizOffline() {
-  try {
-    if (!currentQuizTitle || !currentQuizHtml) { alert("❌ Quiz ଲୋଡ୍ ହୋଇନାହିଁ।"); return; }
-    const s = load("gs_saved_mcqs", {});
-    s[currentQuizTitle] = { title: currentQuizTitle, content: currentQuizHtml, date: new Date().toLocaleDateString("or-IN") };
-    if (store("gs_saved_mcqs", s)) { flushNow(); alert("✅ Quiz Download ହୋଇଗଲା!"); }
-    else { alert(MSG_STORAGE_FULL + "\n\n" + lastStoreError); }
-  } catch (e) { console.error(e); alert("❌ Download ବିଫଳ: " + e.message); }
+  if (!currentQuizTitle || !currentQuizHtml) {
+    alert("❌ Quiz ଲୋଡ୍ ହୋଇନାହିଁ।");
+    return;
+  }
+  const result = await saveQuizToStorage(currentQuizTitle, currentQuizHtml);
+  if (result.ok) {
+    const q = await storageQuota();
+    let msg = "✅ Quiz Download ହୋଇଗଲା!\n\nSize: " + fmtBytes(currentQuizHtml.length);
+    if (q) msg += "\nStorage: " + fmtBytes(q.used) + " / " + fmtBytes(q.quota);
+    alert(msg);
+  } else {
+    alert("❌ Download ବିଫଳ: " + result.error);
+  }
 }
 
 async function downloadSelectedTopicMcq() {
-  const sel = $("mcqTopic"); const file = sel.value;
+  const sel = $("mcqTopic");
+  const file = sel.value;
   if (!file) { alert("ଦୟାକରି ଏକ Topic ବାଛନ୍ତୁ।"); return; }
   const topicName = sel.options[sel.selectedIndex].text;
   const fullUrl = new URL(file, GITHUB_PAGES_BASE).href;
@@ -838,63 +940,126 @@ async function downloadSelectedTopicMcq() {
     const r = await fetch(fullUrl + "?t=" + Date.now());
     if (!r.ok) throw new Error("HTTP " + r.status);
     const html = await r.text();
-    const s = load("gs_saved_mcqs", {});
-    s[key] = { title: key, content: html, date: new Date().toLocaleDateString("or-IN") };
-    if (store("gs_saved_mcqs", s)) { flushNow(); alert("✅ Offline Save ହୋଇଗଲା!"); }
-    else { alert(MSG_STORAGE_FULL + "\n\n" + lastStoreError); }
-  } catch (e) { console.error(e); alert("ଡାଉନଲୋଡ୍ ବିଫଳ। ଇଣ୍ଟରନେଟ୍ ଯାଞ୍ଚ କରନ୍ତୁ।"); }
+    const result = await saveQuizToStorage(key, html);
+    if (result.ok) {
+      const q = await storageQuota();
+      let msg = "✅ Offline Save ହୋଇଗଲା!\n\nSize: " + fmtBytes(html.length);
+      if (q) msg += "\nStorage: " + fmtBytes(q.used) + " / " + fmtBytes(q.quota);
+      alert(msg);
+    } else {
+      alert("❌ Save ବିଫଳ: " + result.error);
+    }
+  } catch (e) {
+    console.error(e);
+    alert("ଡାଉନଲୋଡ୍ ବିଫଳ। ଇଣ୍ଟରନେଟ୍ ଯାଞ୍ଚ କରନ୍ତୁ।");
+  }
 }
 
-function fmtBytes(n) { if (n < 1024) return n + " B"; if (n < 1048576) return (n / 1024).toFixed(1) + " KB"; return (n / 1048576).toFixed(2) + " MB"; }
-function byteSize(s) { return fmtBytes(new Blob([String(s || "")]).size); }
+function fmtBytes(n) {
+  if (n < 1024) return n + " B";
+  if (n < 1048576) return (n / 1024).toFixed(1) + " KB";
+  if (n < 1073741824) return (n / 1048576).toFixed(2) + " MB";
+  return (n / 1073741824).toFixed(2) + " GB";
+}
 
 function makeRow(titleText, dateText, openLabel, onOpen, onDelete, sizeText) {
-  const row = document.createElement("div"); row.className = "item";
+  const row = document.createElement("div");
+  row.className = "item";
   row.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:12px 6px;gap:8px;";
   const info = document.createElement("div");
-  const title = document.createElement("b"); title.textContent = titleText;
-  const date = document.createElement("small"); date.className = "muted"; date.textContent = (dateText || "") + (sizeText ? " · " + sizeText : "");
+  info.style.flex = "1";
+  info.style.minWidth = "0";
+  const title = document.createElement("b");
+  title.textContent = titleText;
+  title.style.cssText = "display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
+  const date = document.createElement("small");
+  date.className = "muted";
+  date.textContent = (dateText || "") + (sizeText ? " · " + sizeText : "");
   info.append(title, document.createElement("br"), date);
-  const actions = document.createElement("div"); actions.style.cssText = "display:flex;gap:6px;";
-  const o = document.createElement("button"); o.type = "button"; o.className = "btn green"; o.style.cssText = "padding:6px 12px;font-size:13px;"; o.textContent = openLabel; o.onclick = onOpen;
-  const d = document.createElement("button"); d.type = "button"; d.className = "btn red"; d.style.cssText = "padding:6px 10px;font-size:13px;"; d.textContent = "✕"; d.onclick = onDelete;
-  actions.append(o, d); row.append(info, actions); return row;
+  const actions = document.createElement("div");
+  actions.style.cssText = "display:flex;gap:6px;flex-shrink:0;";
+  const o = document.createElement("button");
+  o.type = "button";
+  o.className = "btn green";
+  o.style.cssText = "padding:6px 12px;font-size:13px;";
+  o.textContent = openLabel;
+  o.onclick = onOpen;
+  const d = document.createElement("button");
+  d.type = "button";
+  d.className = "btn red";
+  d.style.cssText = "padding:6px 10px;font-size:13px;";
+  d.textContent = "✕";
+  d.onclick = onDelete;
+  actions.append(o, d);
+  row.append(info, actions);
+  return row;
 }
 
 function openOfflineQuizMenu() { showScreen("offlineQuizMenuScreen"); }
 
-function renderDownloadedQuizList() {
-  const savedMcqs = load("gs_saved_mcqs", {}); const container = $("downloadedQuizList"); const keys = Object.keys(savedMcqs);
-  if (!keys.length) { container.innerHTML = '<div style="text-align:center;padding:18px;color:var(--muted);">କୌଣସି Quiz Download ହୋଇନାହିଁ।</div>'; return; }
-  let totalBytes = 0; container.innerHTML = "";
-  keys.forEach(key => {
-    const item = savedMcqs[key]; totalBytes += new Blob([String(item.content || "")]).size;
-    container.appendChild(makeRow("📝 " + (item.title || key), item.date, "Play", () => openDownloadedMcq(key), () => deleteDownloadedMcq(key), byteSize(item.content)));
-  });
-  const head = document.createElement("div"); head.className = "muted"; head.style.cssText = "text-align:center;padding:4px 0 10px;font-size:13px;"; head.textContent = "Total: " + fmtBytes(totalBytes); container.prepend(head);
+async function renderDownloadedQuizList() {
+  await ensureMigration();
+  const container = $("downloadedQuizList");
+  container.innerHTML = '<div class="muted" style="text-align:center;padding:10px;">Loading...</div>';
+  try {
+    const all = await idbList();
+    if (!all.length) {
+      container.innerHTML = '<div style="text-align:center;padding:18px;color:var(--muted);">କୌଣସି Quiz Download ହୋଇନାହିଁ।</div>';
+      return;
+    }
+    let totalBytes = 0;
+    container.innerHTML = "";
+    all.forEach(it => {
+      totalBytes += (it.size || 0);
+      container.appendChild(makeRow(
+        "📝 " + (it.title || it.id),
+        it.date,
+        "Play",
+        () => openDownloadedMcq(it.id),
+        () => deleteDownloadedMcq(it.id),
+        fmtBytes(it.size || 0)
+      ));
+    });
+    const q = await storageQuota();
+    const head = document.createElement("div");
+    head.className = "muted";
+    head.style.cssText = "text-align:center;padding:4px 0 10px;font-size:13px;";
+    head.textContent = "Total: " + fmtBytes(totalBytes) + " · " + all.length + " quizzes"
+      + (q ? " | Quota: " + fmtBytes(q.quota) : "");
+    container.prepend(head);
+  } catch (e) {
+    console.error(e);
+    container.innerHTML = '<div class="card" style="color:var(--bad);">Storage error: ' + esc(e.message) + '</div>';
+  }
 }
 
-function openDownloadedMcq(key) {
-  const item = load("gs_saved_mcqs", {})[key];
-  if (!item || !item.content) { alert("Downloaded Quiz ମିଳିଲା ନାହିଁ।"); return; }
-  currentViewMode = "downloaded_quiz"; activeQuizLabel = key; currentQuizHtml = ""; currentQuizTitle = ""; currentQuizUrl = ""; isQuizPaused = false;
-  quizSeconds = 0; $("quizRunningTimer").textContent = "00:00";
-  clearInterval(quizTimerInterval);
-  quizTimerInterval = setInterval(() => { if (!isQuizPaused) { quizSeconds++; $("quizRunningTimer").textContent = fmtTime(quizSeconds); } }, 1000);
-  $("pauseModal").classList.remove("active"); $("quizTimerBar").style.display = "flex"; $("noteActionToolbar").style.display = "none"; $("viewerBackButton").textContent = "← Back to Sets";
-  showScreen("quizScreen"); $("quizFrame").srcdoc = withBase(item.content);
+async function openDownloadedMcq(id) {
+  const item = await loadQuizFromStorage(id);
+  if (!item || !item.content) {
+    alert("❌ Downloaded Quiz ମିଳିଲା ନାହିଁ। ପୁନର୍ବାର Download କରନ୍ତୁ।");
+    return;
+  }
+  currentViewMode = "downloaded_quiz";
+  activeQuizLabel = item.title;
+  currentQuizHtml = "";
+  currentQuizTitle = "";
+  currentQuizUrl = "";
+  $("noteActionToolbar").style.display = "none";
+  $("viewerBackButton").textContent = "← Back to Sets";
+  showScreen("quizScreen");
+  $("quizFrame").srcdoc = withBase(item.content);
 }
 
-function deleteDownloadedMcq(key) {
-  askConfirm(key + " କାଢ଼ିବାକୁ ଚାହାନ୍ତି?", function () {
-    const s = load("gs_saved_mcqs", {}); delete s[key];
-    if (!store("gs_saved_mcqs", s)) alert("⚠ ଡିଲିଟ୍ ବିଫଳ।\n" + lastStoreError); else flushNow();
-    renderDownloadedQuizList();
+function deleteDownloadedMcq(id) {
+  askConfirm("ଏହି Quiz କାଢ଼ିବେ?", async function () {
+    const ok = await deleteQuizFromStorage(id);
+    if (ok) renderDownloadedQuizList();
+    else alert("❌ Delete ବିଫଳ।");
   });
 }
 
 // ==========================================
-// WRONG QUESTIONS
+// 10. WRONG QUESTIONS TRACKING
 // ==========================================
 var wrongObserver = null, wrongTimer = null;
 
@@ -926,7 +1091,8 @@ function hookQuizFrame() {
 
 function scanWrong(doc) {
   try {
-    var wrongRe = /(^|[\s_-])(wrong|incorrect)([\s_-]|$)/i, okRe = /(^|[\s_-])(correct|right)([\s_-]|$)/i;
+    var wrongRe = /(^|[\s_-])(wrong|incorrect)([\s_-]|$)/i;
+    var okRe = /(^|[\s_-])(correct|right)([\s_-]|$)/i;
     var optSel = "button,li,label,[class*=opt],[class*=choice],[class*=answer]";
     Array.prototype.forEach.call(doc.querySelectorAll("[class]"), function (el) {
       if (el.dataset && el.dataset.gsw) return;
@@ -944,13 +1110,18 @@ function scanWrong(doc) {
       el.dataset.gsw = "1";
       var opts = [];
       Array.prototype.forEach.call(box.querySelectorAll(optSel), function (o) {
-        var t = (o.innerText || "").trim(); if (t && opts.indexOf(t) === -1 && t.length < 250) opts.push(t);
+        var t = (o.innerText || "").trim();
+        if (t && opts.indexOf(t) === -1 && t.length < 250) opts.push(t);
       });
-      var qLines = (box.innerText || "").split("\n").map(function (x) { return x.trim(); }).filter(function (x) { return x && opts.indexOf(x) === -1; });
+      var qLines = (box.innerText || "").split("\n").map(function (x) { return x.trim(); })
+        .filter(function (x) { return x && opts.indexOf(x) === -1; });
       var correct = "";
       Array.prototype.forEach.call(box.querySelectorAll("[class]"), function (c) {
         var k = typeof c.className === "string" ? c.className : "";
-        if (!correct && okRe.test(k) && !wrongRe.test(k) && c !== el) { var t = (c.innerText || "").trim(); if (t.length < 250) correct = t; }
+        if (!correct && okRe.test(k) && !wrongRe.test(k) && c !== el) {
+          var t = (c.innerText || "").trim();
+          if (t.length < 250) correct = t;
+        }
       });
       saveWrongQ({ quiz: activeQuizLabel || "Quiz", question: qLines.join(" ").slice(0, 500), chosen: chosen, correct: correct });
     });
@@ -960,14 +1131,21 @@ function scanWrong(doc) {
 window.addEventListener("message", function (e) {
   var d = e.data;
   if (d && d.type === "gs_wrong" && d.question) {
-    saveWrongQ({ quiz: activeQuizLabel || "Quiz", question: String(d.question).slice(0, 500), chosen: String(d.chosen || ""), correct: String(d.correct || "") });
+    saveWrongQ({
+      quiz: activeQuizLabel || "Quiz",
+      question: String(d.question).slice(0, 500),
+      chosen: String(d.chosen || ""),
+      correct: String(d.correct || "")
+    });
   }
 });
 
 function openWrongQs() { showScreen("wrongScreen"); }
 
 function renderWrongQs() {
-  var list = load("gs_wrong_qs", []); var box = $("wrongList"); box.innerHTML = "";
+  var list = load("gs_wrong_qs", []);
+  var box = $("wrongList");
+  box.innerHTML = "";
   $("wrongCount").textContent = list.length ? "ମୋଟ " + list.length + " ଟି ପ୍ରଶ୍ନ" : "";
   $("wrongClearBtn").style.display = list.length ? "block" : "none";
   if (!list.length) {
@@ -988,20 +1166,28 @@ function renderWrongQs() {
 }
 
 function removeWrongQ(i) {
-  var list = load("gs_wrong_qs", []); list.splice(i, 1);
-  store("gs_wrong_qs", list); flushNow(); renderWrongQs();
+  var list = load("gs_wrong_qs", []);
+  list.splice(i, 1);
+  store("gs_wrong_qs", list);
+  flushNow();
+  renderWrongQs();
 }
 
 function clearWrongQs() {
-  askConfirm("ସବୁ ଭୁଲ୍ ପ୍ରଶ୍ନ କାଢ଼ିଦେବେ?", function () { store("gs_wrong_qs", []); flushNow(); renderWrongQs(); });
+  askConfirm("ସବୁ ଭୁଲ୍ ପ୍ରଶ୍ନ କାଢ଼ିଦେବେ?", function () {
+    store("gs_wrong_qs", []);
+    flushNow();
+    renderWrongQs();
+  });
 }
 
 // ==========================================
-// 12. MISC UTILS
+// 11. MISC UTILS
 // ==========================================
 function sendBridge(msg) {
   if (window.AppInventor && typeof window.AppInventor.setWebViewString === "function") {
-    window.AppInventor.setWebViewString(msg); return true;
+    window.AppInventor.setWebViewString(msg);
+    return true;
   }
   return false;
 }
@@ -1017,16 +1203,30 @@ function bookmarkCurrent() {
   const value = { cls: currentClass, sub: currentSubject };
   if (!bookmarks.some(x => x.cls === value.cls && x.sub === value.sub)) {
     bookmarks.push(value);
-    if (store("gs_bookmarks", bookmarks)) { flushNow(); $("noteStatus").textContent = "⭐ Bookmarked!"; }
-    else { $("noteStatus").textContent = "⚠ Bookmark save ବିଫଳ। " + lastStoreError; }
-  } else { $("noteStatus").textContent = "Already bookmarked!"; }
+    if (store("gs_bookmarks", bookmarks)) {
+      flushNow();
+      $("noteStatus").textContent = "⭐ Bookmarked!";
+    } else {
+      $("noteStatus").textContent = "⚠ Bookmark save ବିଫଳ। " + lastStoreError;
+    }
+  } else {
+    $("noteStatus").textContent = "Already bookmarked!";
+  }
 }
 
 function renderBookmarks() {
-  const bookmarks = load("gs_bookmarks", []); const container = $("bookmarkList");
-  if (!bookmarks.length) { container.innerHTML = '<div class="card" style="text-align:center;color:var(--muted);">No bookmarks saved yet.</div>'; return; }
+  const bookmarks = load("gs_bookmarks", []);
+  const container = $("bookmarkList");
+  if (!bookmarks.length) {
+    container.innerHTML = '<div class="card" style="text-align:center;color:var(--muted);">No bookmarks saved yet.</div>';
+    return;
+  }
   const grouped = {};
-  bookmarks.forEach((b, index) => { const key = b.sub || "OTHER"; if (!grouped[key]) grouped[key] = []; grouped[key].push(Object.assign({}, b, { originalIndex: index })); });
+  bookmarks.forEach((b, index) => {
+    const key = b.sub || "OTHER";
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(Object.assign({}, b, { originalIndex: index }));
+  });
   let html = "";
   Object.keys(grouped).forEach(sub => {
     html += '<div class="subject-group"><div class="subject-header"><span>📖 ' + esc(sub) + '</span><span class="count-badge">' + grouped[sub].length + '</span></div>';
@@ -1044,33 +1244,46 @@ function renderBookmarks() {
 }
 
 function goToBookmarked(i) {
-  const b = load("gs_bookmarks", [])[i]; if (!b) return;
+  const b = load("gs_bookmarks", [])[i];
+  if (!b) return;
   if (!subjectsByClass[b.cls]) { alert("ଏହି bookmark ପୁରୁଣା ଅଟେ, ଦୟାକରି ଏହାକୁ କାଢ଼ିଦିଅନ୍ତୁ।"); return; }
   showSubjects(b.cls);
   const prefix = CA + " · ";
   if (String(b.sub).indexOf(prefix) === 0) {
     const m = String(b.sub).slice(prefix.length).split(" ")[0];
-    showMonths(); openMonth(m);
-  } else { openSubject(b.sub); }
+    showMonths();
+    openMonth(m);
+  } else {
+    openSubject(b.sub);
+  }
 }
 
 function deleteBookmark(index) {
-  const bookmarks = load("gs_bookmarks", []); bookmarks.splice(index, 1);
-  store("gs_bookmarks", bookmarks); flushNow(); renderBookmarks();
+  const bookmarks = load("gs_bookmarks", []);
+  bookmarks.splice(index, 1);
+  store("gs_bookmarks", bookmarks);
+  flushNow();
+  renderBookmarks();
 }
 
 function clearBookmarks() {
-  askConfirm("Clear all bookmarks?", function () { store("gs_bookmarks", []); flushNow(); renderBookmarks(); });
+  askConfirm("Clear all bookmarks?", function () {
+    store("gs_bookmarks", []);
+    flushNow();
+    renderBookmarks();
+  });
 }
 
 function openMcqSetup() {
   showScreen("mcqSetup");
-  const prevClass = $("mcqClass").value; const prevSubject = $("mcqSubject").value;
+  const prevClass = $("mcqClass").value;
+  const prevSubject = $("mcqSubject").value;
   $("mcqClass").innerHTML = Object.keys(subjectsByClass).map(cls => '<option value="' + cls + '">' + cls + '</option>').join("");
   if (prevClass && subjectsByClass[prevClass]) $("mcqClass").value = prevClass;
   fillSubjects();
   if (prevSubject && (subjectsByClass[$("mcqClass").value] || []).indexOf(prevSubject) !== -1) {
-    $("mcqSubject").value = prevSubject; fillTopics();
+    $("mcqSubject").value = prevSubject;
+    fillTopics();
   }
   if (!Object.keys(mcqDataStore).length) { $("mcqTopic").innerHTML = '<option value="">Loading topics...</option>'; }
   loadRemoteMcq();
@@ -1086,11 +1299,14 @@ async function loadRemoteMcq() {
   try {
     const r = await fetch(GITHUB_MCQ_JSON_URL + "?t=" + Date.now(), { cache: "no-store" });
     if (!r.ok) throw new Error("HTTP " + r.status);
-    mcqDataStore = await r.json(); store("gs_cached_mcq_json", mcqDataStore);
+    mcqDataStore = await r.json();
+    store("gs_cached_mcq_json", mcqDataStore);
   } catch (error) {
-    console.error("MCQ JSON Error:", error); mcqDataStore = load("gs_cached_mcq_json", {});
+    console.error("MCQ JSON Error:", error);
+    mcqDataStore = load("gs_cached_mcq_json", {});
   }
-  const prevTopic = $("mcqTopic").value; fillTopics();
+  const prevTopic = $("mcqTopic").value;
+  fillTopics();
   if (prevTopic) {
     const has = Array.prototype.some.call($("mcqTopic").options, o => o.value === prevTopic);
     if (has) $("mcqTopic").value = prevTopic;
@@ -1111,55 +1327,61 @@ function fillTopics() {
     const now = new Date();
     if (now.getFullYear() === CA_YEAR) $("mcqMonth").value = CA_MONTHS[now.getMonth()];
   }
-  const cls = $("mcqClass").value; const subject = mcqSubjectKey(); const topicSelect = $("mcqTopic");
+  const cls = $("mcqClass").value;
+  const subject = mcqSubjectKey();
+  const topicSelect = $("mcqTopic");
   const list = (mcqDataStore[cls] && mcqDataStore[cls][subject]) || [];
   if (Array.isArray(list) && list.length > 0) {
     topicSelect.innerHTML = list.map(item => '<option value="' + esc(item.file) + '">' + esc(item.title) + '</option>').join("");
-  } else { topicSelect.innerHTML = '<option value="">No topics available offline</option>'; }
+  } else {
+    topicSelect.innerHTML = '<option value="">No topics available offline</option>';
+  }
 }
 
-function fmtTime(s) { return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }
-
 function startQuiz() {
-  const fileName = $("mcqTopic").value; if (!fileName) { alert("ଦୟାକରି ଏକ Topic ବାଛନ୍ତୁ।"); return; }
+  const fileName = $("mcqTopic").value;
+  if (!fileName) { alert("ଦୟାକରି ଏକ Topic ବାଛନ୍ତୁ।"); return; }
   currentViewMode = "quiz";
-  const fullUrl = new URL(fileName, GITHUB_PAGES_BASE).href; currentQuizUrl = fullUrl;
+  const fullUrl = new URL(fileName, GITHUB_PAGES_BASE).href;
+  currentQuizUrl = fullUrl;
   currentQuizTitle = $("mcqClass").value + " · " + mcqSubjectKey() + " · " + $("mcqTopic").selectedOptions[0].text;
   currentQuizHtml = "";
   activeQuizLabel = currentQuizTitle;
-  $("noteActionToolbar").style.display = "flex"; $("quizSaveBtn").style.display = "block";
-  $("quizTimerBar").style.display = "flex"; $("viewerBackButton").textContent = "← Back to Topics";
-  quizSeconds = 0; isQuizPaused = false; $("quizRunningTimer").textContent = "00:00";
-  clearInterval(quizTimerInterval);
-  quizTimerInterval = setInterval(() => { if (!isQuizPaused) { quizSeconds++; $("quizRunningTimer").textContent = fmtTime(quizSeconds); } }, 1000);
-  $("pauseModal").classList.remove("active"); showScreen("quizScreen");
+  $("noteActionToolbar").style.display = "flex";
+  $("quizSaveBtn").style.display = "block";
+  $("viewerBackButton").textContent = "← Back to Topics";
+  showScreen("quizScreen");
   $("quizFrame").srcdoc = "<div style='display:flex;align-items:center;justify-content:center;height:60vh;font-family:sans-serif;color:#6d28d9;font-size:18px;'><b>Loading Quiz...</b></div>";
   fetch(fullUrl + "?t=" + Date.now())
     .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
-    .then(html => { currentQuizHtml = html; $("quizFrame").srcdoc = withBase(html); })
-    .catch(err => {
+    .then(html => {
+      currentQuizHtml = html;
+      $("quizFrame").srcdoc = withBase(html);
+    })
+    .catch(async err => {
       console.error(err);
-      const saved = load("gs_saved_mcqs", {})[currentQuizTitle];
-      if (saved && saved.content) { currentQuizHtml = saved.content; $("quizFrame").srcdoc = withBase(saved.content); }
-      else { $("quizFrame").srcdoc = "<div style='padding:20px;text-align:center;font-family:sans-serif;'>ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ନାହିଁ।</div>"; }
+      const saved = await loadQuizFromStorage(qid(currentQuizTitle));
+      if (saved && saved.content) {
+        currentQuizHtml = saved.content;
+        $("quizFrame").srcdoc = withBase(saved.content);
+      } else {
+        $("quizFrame").srcdoc = "<div style='padding:20px;text-align:center;font-family:sans-serif;'>ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ନାହିଁ।</div>";
+      }
     });
 }
 
-function pauseQuiz() { isQuizPaused = true; $("pausedTimeText").textContent = fmtTime(quizSeconds); $("pauseModal").classList.add("active"); }
-function resumeQuiz() { isQuizPaused = false; $("pauseModal").classList.remove("active"); }
-function closePauseAndExit() { 
-  $("pauseModal").classList.remove("active"); 
-  cleanViewerFrame(); 
-  showScreen("mcqSetup", false);
-  backStack = ["home", "mcqSetup"];
-  history.replaceState({ screen: "mcqSetup" }, "", "#mcqSetup");
+function startStudy() {
+  if (studyInterval) return;
+  studyInterval = setInterval(() => { studySeconds++; renderStudyClock(); }, 1000);
 }
-
-function startStudy() { if (studyInterval) return; studyInterval = setInterval(() => { studySeconds++; renderStudyClock(); }, 1000); }
 function pauseStudy() { clearInterval(studyInterval); studyInterval = null; }
 function resetStudy() { pauseStudy(); studySeconds = 0; renderStudyClock(); }
 function renderStudyClock() {
-  $("studyClock").textContent = [Math.floor(studySeconds / 3600), Math.floor(studySeconds / 60) % 60, studySeconds % 60].map(v => String(v).padStart(2, "0")).join(":");
+  $("studyClock").textContent = [
+    Math.floor(studySeconds / 3600),
+    Math.floor(studySeconds / 60) % 60,
+    studySeconds % 60
+  ].map(v => String(v).padStart(2, "0")).join(":");
 }
 
 function toggleTheme() {
@@ -1175,8 +1397,12 @@ function shareApp() {
   if (sendBridge("SHARE~" + message)) return;
   if (navigator.share) { navigator.share({ title: "GyanSetu Odisha", text: message }).catch(function () {}); return; }
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(message).then(function () { alert("📋 Message copy ହୋଇଗଲା।"); }).catch(function () { alert("Share not supported."); });
-  } else { alert("Share not supported."); }
+    navigator.clipboard.writeText(message)
+      .then(function () { alert("📋 Message copy ହୋଇଗଲା।"); })
+      .catch(function () { alert("Share not supported."); });
+  } else {
+    alert("Share not supported.");
+  }
 }
 
 if (load("gs_dark_theme", "0") === "1") { document.body.classList.add("dark"); }
