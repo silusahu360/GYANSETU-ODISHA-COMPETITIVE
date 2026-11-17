@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSSSB TGT Social Science - MCQ Practice Quiz</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            background: #eef2ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .question-card {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .question-card.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        .option-item {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+        .option-item:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #f5f3ff;
+        }
+        .option-item.selected {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+        .option-item.correct {
+            background: #dcfce7 !important;
+            border-color: var(--success) !important;
+            color: #166534;
+        }
+        .option-item.incorrect {
+            background: #fee2e2 !important;
+            border-color: var(--error) !important;
+            color: #991b1b;
+        }
+        .option-item.disabled {
+            cursor: default;
+        }
+        .explanation {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .explanation.show {
+            display: block;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+        .score-container {
+            text-align: center;
+            display: none;
+        }
+        .score-container.show {
+            display: block;
+        }
+        .score-box {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>DSSSB TGT Social Science Practice Quiz</h1>
+    <div class="subtitle">Comprehensive Practice Questions (Industrial Revolution, Economic Depression, Labour & Peasant Issues, Colonial History)</div>
+    
+    <div class="quiz-info" id="quiz-info">
+        <span id="question-counter">Question 1 of 35</span>
+        <span id="score-display">Score: 0</span>
+    </div>
+
+    <div id="quiz-box"></div>
+
+    <div class="score-container" id="score-container">
+        <h2>Quiz Completed!</h2>
+        <div class="score-box" id="final-score">Your Score: 0 / 35</div>
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+
+    <div class="nav-buttons" id="nav-container">
+        <button id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
+        <button id="next-btn" onclick="nextQuestion()" disabled>Next</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    {
+        question: "Who invented the flying shuttle in 1733, which dramatically accelerated the weaving process?",
+        options: ["James Hargreaves", "John Kay", "Richard Arkwright", "Samuel Crompton"],
+        answer: 1,
+        explanation: "John Kay invented the flying shuttle in 1733, increasing weaving speed and triggering cotton yarn shortages that led to spinning inventions."
+    },
+    {
+        question: "What was the Zollverein, formed in 1834 under Prussian initiative?",
+        options: ["A labor union for textile workers", "A military alliance of German states", "A customs union that eliminated internal tariffs and created a unified economic territory", "A medical association"],
+        answer: 2,
+        explanation: "The Zollverein was a customs union formed in 1834 under Prussian leadership that unified German economic space and paved the way for political unification."
+    },
+    {
+        question: "Which country served as the birthplace of the First Industrial Revolution during the mid-to-late 18th century?",
+        options: ["Germany", "France", "Britain", "Spain"],
+        answer: 2,
+        explanation: "Britain was the birthplace of the Industrial Revolution, driven by abundant coal and iron, capital, agricultural revolution, and stable institutions."
+    },
+    {
+        question: "Who developed the Spinning Jenny, ready around 1764 and patented in 1770?",
+        options: ["John Kay", "James Hargreaves", "James Watt", "Edmund Cartwright"],
+        answer: 1,
+        explanation: "James Hargreaves developed the Spinning Jenny, allowing a worker to spin multiple threads simultaneously."
+    },
+    {
+        question: "Which German region emerged as a major center for machine production in the mid-1830s?",
+        options: ["Rhineland", "Berlin", "Silesia", "Saxony"],
+        answer: 3,
+        explanation: "Saxony became a prominent German center for machine production and textile manufacturing following the Zollverein."
+    },
+    {
+        question: "According to NCERT, when did the number of factories in England begin to multiply significantly?",
+        options: ["Seventeenth century", "Eighteenth century (specifically the latter half)", "Nineteenth century", "Twentieth century"],
+        answer: 1,
+        explanation: "NCERT notes that while early factories appeared in the 1730s, they multiplied rapidly only in the latter half of the eighteenth century."
+    },
+    {
+        question: "Which two mineral resources provided Britain with a decisive advantage during the Industrial Revolution?",
+        options: ["Copper and Cobalt", "Gold and Silver", "Coal and Iron", "Lead and Tin"],
+        answer: 2,
+        explanation: "Coal provided the steam fuel, while iron supplied the material for tools, bridges, and machinery."
+    },
+    {
+        question: "Which Scottish city became known as 'Juteopolis' due to its global dominance in jute processing?",
+        options: ["Manchester", "Lancashire", "Dundee", "Glasgow"],
+        answer: 2,
+        explanation: "Dundee in eastern Scotland processed raw jute imported primarily from Bengal, earning the nickname 'Juteopolis'."
+    },
+    {
+        question: "Who designed the pre-modern/early atmospheric steam engine around 1712?",
+        options: ["Thomas Newcomen", "Thomas Papin", "James Watt", "Matthew Boulton"],
+        answer: 0,
+        explanation: "Thomas Newcomen designed the early atmospheric steam engine primarily to pump water out of deep mines."
+    },
+    {
+        question: "Who pioneered the first steam-powered railway locomotive in 1804 at the Penydarren Ironworks in South Wales?",
+        options: ["George Stephenson", "Edmund Cartwright", "Richard Trevithick", "James Watt"],
+        answer: 2,
+        explanation: "Richard Trevithick built the first steam locomotive to run on an industrial rail line in 1804."
+    },
+    {
+        question: "Which British historian popularized the term 'Industrial Revolution' in his 1884 book?",
+        options: ["E.P. Thompson", "Arnold Toynbee", "Eric Hobsbawm", "Karl Marx"],
+        answer: 1,
+        explanation: "Arnold Toynbee popularized the term in his posthumously published 1884 book 'Lectures on the Industrial Revolution'."
+    },
+    {
+        question: "Who is known as the 'Father of the American Industrial Revolution' after bringing textile machine designs to Rhode Island in 1793?",
+        options: ["Thomas Edison", "Samuel Slater", "Eli Whitney", "Cyrus McCormick"],
+        answer: 1,
+        explanation: "Samuel Slater memorized British mill designs and established the first successful water-powered cotton mill in Pawtucket."
+    },
+    {
+        question: "What was the primary mining problem that originally drove the development and refinement of early steam engines?",
+        options: ["Transporting coal to factories", "Smelting iron ore", "Pumping water out of deep mines", "Ventilating underground shafts"],
+        answer: 2,
+        explanation: "Flooding in deep coal and tin mines created an urgent need for reliable pumps, driving steam engine invention."
+    },
+    {
+        question: "What advantage did Richard Arkwright's water-frame (1769) have over earlier spinning machines?",
+        options: ["It was powered by electricity.", "It produced yarn strong enough for both warp and weft.", "It was small enough for domestic use.", "It only required unskilled child labor."],
+        answer: 1,
+        explanation: "The water-frame produced strong yarn suitable for warp threads, enabling fully mechanized cloth production."
+    },
+    {
+        question: "Who was the mythical leader of the Luddite movement (1811–1816) associated with machine-breaking?",
+        options: ["John Kay", "Robert Owen", "General Ned Ludd", "Captain Swing"],
+        answer: 2,
+        explanation: "Workers protested mechanization by destroying textile machinery, signing threatening letters under the name General Ned Ludd."
+    },
+    {
+        question: "What major international exhibition took place at the Crystal Palace in London in 1851?",
+        options: ["The first World's Fair celebrating industrial technology", "The international socialist congress", "The signing of the peace treaty", "The first global trade union conference"],
+        answer: 0,
+        explanation: "The Great Exhibition of 1851 showcased industrial supremacy inside Joseph Paxton's glass-and-iron Crystal Palace."
+    },
+    {
+        question: "When did the first worldwide economic downturn (Long Depression / Panic of 1873) begin?",
+        options: ["1870", "1873", "1896", "1929"],
+        answer: 1,
+        explanation: "The Long Depression started in May 1873 with the Vienna stock exchange crash followed by US banking failures."
+    },
+    {
+        question: "Which catastrophic event on Wall Street in October 1929 triggered the Great Depression?",
+        options: ["A massive agricultural strike", "The collapse of the New York Stock Exchange", "The nationalization of US banks", "The passing of the Smoot-Hawley Tariff"],
+        answer: 1,
+        explanation: "The Wall Street Crash of October 1929 wiped out investor confidence and sparked the Great Depression."
+    },
+    {
+        question: "Which US President introduced the 'New Deal' program in 1933 to combat the Great Depression?",
+        options: ["Herbert Hoover", "Franklin D. Roosevelt (FDR)", "Woodrow Wilson", "Harry S. Truman"],
+        answer: 1,
+        explanation: "FDR launched the New Deal in 1933 during his first hundred days in office, introducing sweeping economic relief and reform."
+    },
+    {
+        question: "Which country was worst affected economically by the Wall Street Crash due to its reliance on short-term US loans?",
+        options: ["Britain", "France", "Germany", "Soviet Union"],
+        answer: 2,
+        explanation: "Germany suffered severely because its post-war recovery was funded by US loans under the Dawes Plan, which were abruptly recalled."
+    },
+    {
+        question: "Which sector of the world economy was the first to experience crisis and falling prices prior to 1929 due to overproduction?",
+        options: ["Manufacturing", "Mining", "Agriculture", "Banking"],
+        answer: 2,
+        explanation: "Agricultural overproduction during and after WWI led to falling crop prices and rural distress before the 1929 stock crash."
+    },
+    {
+        question: "What were 'Hoovervilles' during the Great Depression?",
+        options: ["Government-funded housing projects", "Shantytowns built by homeless Americans, named mockingly after President Hoover", "Industrial towns created by the New Deal", "Luxury estates owned by bankrupt stockbrokers"],
+        answer: 1,
+        explanation: "Hoovervilles were shantytowns named after President Herbert Hoover to express public anger at his perceived inaction."
+    },
+    {
+        question: "Which legislation created the National Recovery Administration (NRA) in 1933?",
+        options: ["Social Security Act", "National Industrial Recovery Act (NIRA)", "Wagner Act", "Agricultural Adjustment Act"],
+        answer: 1,
+        explanation: "The NIRA of 1933 established the NRA to set fair competition codes, wages, and labor standards."
+    },
+    {
+        question: "Which country was the first major nation to abandon the Gold Standard during the Great Depression (September 1931)?",
+        options: ["United States", "France", "Britain", "Germany"],
+        answer: 2,
+        explanation: "Britain abandoned the gold standard in September 1931 to devalue the pound and stimulate exports."
+    },
+    {
+        question: "What was the purpose of the Securities and Exchange Commission (SEC) established in the US in 1934?",
+        options: ["To manage agricultural subsidies", "To provide unemployment insurance", "To regulate stock markets and protect investors from fraud", "To control labor union strikes"],
+        answer: 2,
+        explanation: "The SEC was created to regulate financial markets and prevent the reckless speculation that caused the 1929 crash."
+    },
+    {
+        question: "What was the primary objective of the Combination Acts passed by British Parliament in 1799 and 1800?",
+        options: ["To restrict child labor in factories", "To prevent workers from forming trade unions, organizing, or striking", "To mandate a minimum wage", "To regulate working hours for women"],
+        answer: 1,
+        explanation: "The Combination Acts made trade unions and collective bargaining illegal to suppress worker protests."
+    },
+    {
+        question: "What was the Bijolia Movement (starting in 1897)?",
+        options: ["A textile workers' strike in Lancashire", "A peasant movement in Mewar (Rajasthan) against excessive taxes and forced labor", "A machine-breaking protest in rural England", "A tribal uprising in central India"],
+        answer: 1,
+        explanation: "The Bijolia peasant movement in Rajasthan resisted high land taxes and begar (forced labor) under feudal landlords."
+    },
+    {
+        question: "Who propounded the famous 'Drain Theory', arguing that Britain was systematically draining India's wealth?",
+        options: ["Madan Mohan Malaviya", "Dadabhai Naoroji", "Surendranath Banerjee", "Mahatma Gandhi"],
+        answer: 1,
+        explanation: "Dadabhai Naoroji formulated the Drain Theory in his book 'Poverty and Un-British Rule in India'."
+    },
+    {
+        question: "What did the Factory Act of 1833 in Britain accomplish?",
+        options: ["Banned all forms of child labor across all industries", "Limited working hours for children and introduced factory inspectors for enforcement", "Established a national minimum wage for adult workers", "Legalized trade unions for the first time"],
+        answer: 1,
+        explanation: "The 1833 Act limited children's hours, prohibited under-9 employment in textile mills, and established factory inspectors."
+    },
+    {
+        question: "What was the significance of the Trade Union Act of 1871 in Britain?",
+        options: ["It made trade unions completely illegal", "It granted trade unions full legal status and recognition", "It restricted workers from striking in public utilities", "It merged all unions into a single political party"],
+        answer: 1,
+        explanation: "The Trade Union Act of 1871 provided British trade unions with full legal recognition and protection for their funds."
+    },
+    {
+        question: "When and where was the Tata Iron and Steel Company (TISCO) established?",
+        options: ["1907 in Jamshedpur", "1912 in Bombay", "1854 in Calcutta", "1920 in Nagpur"],
+        answer: 0,
+        explanation: "TISCO was founded by Jamsetji Tata in 1907 in Jamshedpur, beginning steel production in 1912."
+    },
+    {
+        question: "Who introduced the 'Subsidiary Alliance' system in 1798, requiring Indian rulers to maintain British troops?",
+        options: ["Lord Cornwallis", "Lord Wellesley", "Lord Dalhousie", "Warren Hastings"],
+        answer: 1,
+        explanation: "Lord Wellesley introduced the Subsidiary Alliance system, compelling Indian states to accept British military garrisons and control."
+    },
+    {
+        question: "Which British Governor-General abolished Sati in 1829 through the Bengal Sati Regulation?",
+        options: ["Lord William Bentinck", "Lord Canning", "Lord Lytton", "Lord Curzon"],
+        answer: 0,
+        explanation: "Lord William Bentinck enacted the 1829 regulation abolishing Sati due to reform campaigns led by Raja Ram Mohan Roy."
+    },
+    {
+        question: "Which two controversial acts were passed by Lord Lytton in 1878 to restrict Indian freedoms and muzzle the vernacular press?",
+        options: ["Rowlatt Act and Vernacular Press Act", "Arms Act and Vernacular Press Act", "Charter Act and Pitt's India Act", "Ilbert Bill and Age of Consent Act"],
+        answer: 1,
+        explanation: "Lord Lytton passed the Arms Act and Vernacular Press Act in 1878, imposing discriminatory controls on Indians."
+    },
+    {
+        question: "What was the historical significance of the Battle of Tsushima in 1905 during the Russo-Japanese War?",
+        options: ["It marked the first time an Asian power defeated a major European power in a modern war.", "It resulted in the colonization of Japan by Russia.", "It ended World War I in Asia.", "It led to the division of China among European powers."],
+        answer: 0,
+        explanation: "Japan's decisive naval victory over Russia in 1905 shattered the myth of European invincibility and inspired Asian nationalists."
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let userAnswers = new Array(quizData.length).fill(null);
+
+function loadQuestion() {
+    const q = quizData[currentQuestion];
+    const box = document.getElementById('quiz-box');
+    
+    let html = `
+        <div class="question-card active">
+            <div class="question-title">Q${currentQuestion + 1}. ${q.question}</div>
+            <ul class="options-list">
+    `;
+
+    q.options.forEach((opt, idx) => {
+        let className = 'option-item';
+        const savedAnswer = userAnswers[currentQuestion];
+        
+        if (savedAnswer !== null) {
+            className += ' disabled';
+            if (idx === q.answer) {
+                className += ' correct';
+            } else if (idx === savedAnswer) {
+                className += ' incorrect';
+            }
+        }
+
+        html += `<li class="${className}" onclick="selectOption(${idx})">${String.fromCharCode(65 + idx)}. ${opt}</li>`;
+    });
+
+    html += `
+            </ul>
+            <div class="explanation ${userAnswers[currentQuestion] !== null ? 'show' : ''}" id="explanation-box">
+                <strong>Explanation:</strong> ${q.explanation}
+            </div>
+        </div>
+    `;
+
+    box.innerHTML = html;
+    document.getElementById('question-counter').innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+    document.getElementById('score-display').innerText = `Score: ${score}`;
+
+    document.getElementById('prev-btn').disabled = currentQuestion === 0;
+    document.getElementById('next-btn').disabled = userAnswers[currentQuestion] === null;
+}
+
+function selectOption(selectedIdx) {
+    if (userAnswers[currentQuestion] !== null) return; // already answered
+
+    userAnswers[currentQuestion] = selectedIdx;
+    const q = quizData[currentQuestion];
+
+    if (selectedIdx === q.answer) {
+        score++;
+    }
+
+    loadQuestion();
+}
+
+function nextQuestion() {
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+    } else {
+        showScore();
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+    }
+}
+
+function showScore() {
+    document.getElementById('quiz-box').style.display = 'none';
+    document.getElementById('quiz-info').style.display = 'none';
+    document.getElementById('nav-container').style.display = 'none';
+    
+    const scoreContainer = document.getElementById('score-container');
+    scoreContainer.classList.add('show');
+    document.getElementById('final-score').innerText = `Your Score: ${score} / ${quizData.length}`;
+}
+
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    userAnswers.fill(null);
+    
+    document.getElementById('quiz-box').style.display = 'block';
+    document.getElementById('quiz-info').style.display = 'flex';
+    document.getElementById('nav-container').style.display = 'flex';
+    document.getElementById('score-container').classList.remove('score-container'); // wait, remove 'show'
+    document.getElementById('score-container').classList.remove('show');
+    
+    loadQuestion();
+}
+
+// Initialize
+loadQuestion();
+</script>
+</body>
+</html>
